@@ -1,0 +1,61 @@
+/* Header.css */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap');
+.header {
+    background-color: #1e1e29;
+}
+
+.container {
+    max-width: 1900px;
+    margin: 0 auto;
+    padding: 14px 20px;
+}
+
+.header-inner {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.logo-menu-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.logo-wrapper {
+    display: flex;
+    align-items: center;
+    margin-right: 60px;
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.logo-large {
+    padding: 10px;
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+}
+
+.menu-item {
+    margin-right: 20px;
+}
+
+.menu-link {
+    text-decoration: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #a7a7ff;
+    font-family: Montserrat, serif;
+    font-size: .875rem;
+    line-height: 1.125rem;
+}
+
+.menu-link:hover {
+    text-decoration: underline;
+}
