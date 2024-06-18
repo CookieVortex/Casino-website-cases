@@ -8,7 +8,6 @@ import sign from '../assets/icons/sign.svg';
 import wifi from '../assets/icons/wifi.svg';
 import crown from '../assets/icons/crown.svg';
 import cube from '../assets/icons/cube.svg';
-import iconBg from '../assets/icons/iconBg.svg';
 
 const Header = () => {
     const menuItems = [
