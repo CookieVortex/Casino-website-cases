@@ -74,6 +74,7 @@ const Header = () => {
                             </div>
                         </div>
                         <div className="block right-block">
+                            <a>test</a>
                             <div className="colored-sections">
                                 {coloredSections}
                             </div>
