@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../header.css';
 
 import caseIcon1 from '../assets/icons/case.svg';
@@ -8,14 +8,21 @@ import sign from '../assets/icons/sign.svg';
 import wifi from '../assets/icons/wifi.svg';
 import crown from '../assets/icons/crown.svg';
 import cube from '../assets/icons/cube.svg';
-import iconBg from '../assets/icons/iconBg.svg';
+import menuIcon from '../assets/icons/menu.svg'; // Импортируем иконку меню
+import smallLogo from '../assets/icons/iconBg.svg'; // Импортируем маленький логотип
 
 const Header = () => {
+    const [menuOpen, setMenuOpen] = useState(false);
+
     const menuItems = [
         { text: 'кейсы', href: '#', icon: caseIcon1 },
         { text: 'апгрейд', href: '#', icon: upgrade },
         { text: 'контракты', href: '#', icon: contract }
     ];
+
+    const toggleMenu = () => {
+        setMenuOpen(!menuOpen);
+    };
 
     const coloredSections = Array.from({ length: 10 }, (v, i) => (
         <div className="colored-section" key={i}></div>
@@ -26,15 +33,20 @@ const Header = () => {
             <header className="header">
                 <div className="container">
                     <div className="header-inner">
+                        <div className="small-logo-wrapper">
+                            <img src={smallLogo} alt="Маленький логотип" className="small-logo" />
+                        </div>
+
                         <div className="logo-menu-wrapper">
                             <div className="logo-wrapper">
                                 <a href="/" className="logo-link">
                                     <div className="logo-large">
-                                        <img src="https://rustbox.io/assets/icons/logo.svg" alt="Логотип" />
+                                        <img src="https://rustbox.io/assets/icons/logo.svg" alt="Логотип" className="large-logo" />
+                                        <img src={smallLogo} alt="Маленький логотип" className="small-logo-in-responsive" />
                                     </div>
                                 </a>
                             </div>
-                            <nav className="menu">
+                            <nav className={`menu ${menuOpen ? 'menu-open' : ''}`}>
                                 {menuItems.map((item, index) => (
                                     <span key={index} className="menu-item">
                                         <a href={item.href} className="menu-link">
@@ -44,6 +56,9 @@ const Header = () => {
                                     </span>
                                 ))}
                             </nav>
+                            <button className="menu-toggle" onClick={toggleMenu}>
+                                <img src={menuIcon} alt="Menu" className="menu-icon-svg" />
+                            </button>
                         </div>
                         <div className="login-button-wrapper">
                             <button className="login-button">
@@ -54,7 +69,6 @@ const Header = () => {
                     </div>
                 </div>
             </header>
-
 
             <div className="block-wrapper">
                 <div className="container">
@@ -82,8 +96,6 @@ const Header = () => {
                     </div>
                 </div>
             </div>
-
-
         </div>
     );
 };

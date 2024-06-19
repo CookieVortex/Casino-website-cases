@@ -1,10 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap');
 
+html, body {
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
 .header {
     background-color: #1e1e29;
     padding: 14px 20px;
+    position: relative;
+    width: 100%;
 }
-
 
 .container {
     max-width: 100%;
@@ -14,11 +23,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
 }
 
 .logo-menu-wrapper {
     display: flex;
     align-items: center;
+    width: 100%;
 }
 
 .logo-wrapper {
@@ -36,23 +47,38 @@
     padding: 12px;
 }
 
+.small-logo {
+    display: none; /* По умолчанию скрываем маленькую иконку */
+}
+
+.small-logo-in-responsive {
+    display: none; /* Скрываем маленький логотип по умолчанию */
+}
+
+.large-logo {
+    display: block; /* Отображаем большой логотип по умолчанию */
+}
+
 .menu {
     display: flex;
     align-items: center;
-    padding: 0;
     list-style-type: none;
-    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+.menu-toggle {
+    display: none; /* Скрываем кнопку по умолчанию */
+    background: none;
+    border: none;
+    color: #c5c5d3;
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-left: 20px;
 }
 
 .menu-item {
     margin-left: 20px;
-    margin-right: 5px;
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
 }
 
 .menu-link {
@@ -65,7 +91,6 @@
     line-height: 1.125rem;
     font-weight: 500;
     text-transform: uppercase;
-    margin: -5px;
 }
 
 .menu-icon {
@@ -78,6 +103,8 @@
 .login-button-wrapper {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
+    flex-grow: 0;
 }
 
 .login-button {
@@ -95,12 +122,13 @@
     display: inline-flex;
     align-items: center;
     background-color: #c5c5ff;
+    margin: 0 45px;
 }
 
 .login-button-icon {
-    margin-right: 10px;
-    width: 16px;
-    height: 15px;
+    margin-right: 0.5em;
+    width: 1.5em;
+    height: auto;
 }
 
 .login-button-text {
@@ -109,28 +137,76 @@
     text-transform: uppercase;
 }
 
+.small-logo-wrapper {
+    display: none; /* По умолчанию скрываем маленький логотип */
+}
+
 @media (max-width: 768px) {
-    .header {
-        padding: 10px 15px;
+    .small-logo-wrapper {
+        display: flex; /* Показываем маленький логотип при уменьшении экрана */
+        align-items: center; /* Выравниваем по центру */
+        margin-right: 10px; /* Отступ справа */
     }
 
-    .logo-large {
-        padding: 8px;
+    .small-logo {
+        width: 30px; /* Устанавливаем размеры маленького логотипа */
+        height: auto;
+    }
+
+    .large-logo {
+        display: none; /* Скрываем большой логотип на маленьких экранах */
+    }
+
+    .small-logo-in-responsive {
+        display: block; /* Показываем маленький логотип на маленьких экранах */
+    }
+
+    .menu {
+        display: none; /* Скрываем меню по умолчанию */
+        position: absolute;
+        top: 75px;
+        left: 0;
+        right: 0;
+        background-color: #1e1e29;
+        padding: 10px 0;
+        flex-direction: column;
+        z-index: 10;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .menu.menu-open {
+        display: flex; /* Показываем меню, когда добавлен класс 'menu-open' */
+    }
+
+    .menu-toggle {
+        display: block; /* Показываем кнопку при уменьшении экрана */
     }
 
     .menu-item {
-        margin-left: 12px;
-        margin-right: 3px;
-        padding: 8px;
+        margin: 5px 0;
+        padding: 10px 20px; /* Внутренние отступы для элементов меню */
     }
 
     .menu-link {
-        font-size: 0.75rem;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        padding: 8px 0; /* Внутренние отступы для текста в меню */
     }
 
-    .login-button {
-        padding: 12px 16px;
-        font-size: 0.75rem;
+    .menu-link:hover {
+        background-color: #282836; /* Цвет фона при наведении */
+    }
+
+    .menu-icon {
+        margin-right: 10px;
+        width: 20px;
+        height: 20px;
+        flex-shrink: 0;
+    }
+
+    .login-button-wrapper {
+        margin-left: auto; /* Добавляем отступ слева */
     }
 }
 
