@@ -48,15 +48,15 @@ html, body {
 }
 
 .small-logo {
-    display: none; /* По умолчанию скрываем маленькую иконку */
+    display: none;
 }
 
 .small-logo-in-responsive {
-    display: none; /* Скрываем маленький логотип по умолчанию */
+    display: none;
 }
 
 .large-logo {
-    display: block; /* Отображаем большой логотип по умолчанию */
+    display: block;
 }
 
 .menu {
@@ -68,7 +68,7 @@ html, body {
 }
 
 .menu-toggle {
-    display: none; /* Скрываем кнопку по умолчанию */
+    display: none;
     background: none;
     border: none;
     color: #c5c5d3;
@@ -138,31 +138,31 @@ html, body {
 }
 
 .small-logo-wrapper {
-    display: none; /* По умолчанию скрываем маленький логотип */
+    display: none;
 }
 
 @media (max-width: 768px) {
     .small-logo-wrapper {
-        display: flex; /* Показываем маленький логотип при уменьшении экрана */
-        align-items: center; /* Выравниваем по центру */
-        margin-right: 10px; /* Отступ справа */
+        display: flex;
+        align-items: center;
+        margin-right: 10px;
     }
 
     .small-logo {
-        width: 30px; /* Устанавливаем размеры маленького логотипа */
+        width: 30px;
         height: auto;
     }
 
     .large-logo {
-        display: none; /* Скрываем большой логотип на маленьких экранах */
+        display: none;
     }
 
     .small-logo-in-responsive {
-        display: block; /* Показываем маленький логотип на маленьких экранах */
+        display: block;
     }
 
     .menu {
-        display: none; /* Скрываем меню по умолчанию */
+        display: none;
         position: absolute;
         top: 75px;
         left: 0;
@@ -175,27 +175,27 @@ html, body {
     }
 
     .menu.menu-open {
-        display: flex; /* Показываем меню, когда добавлен класс 'menu-open' */
+        display: flex;
     }
 
     .menu-toggle {
-        display: block; /* Показываем кнопку при уменьшении экрана */
+        display: block;
     }
 
     .menu-item {
         margin: 5px 0;
-        padding: 10px 20px; /* Внутренние отступы для элементов меню */
+        padding: 10px 20px;
     }
 
     .menu-link {
         text-decoration: none;
         display: flex;
         align-items: center;
-        padding: 8px 0; /* Внутренние отступы для текста в меню */
+        padding: 8px 0;
     }
 
     .menu-link:hover {
-        background-color: #282836; /* Цвет фона при наведении */
+        background-color: #282836;
     }
 
     .menu-icon {
@@ -206,7 +206,7 @@ html, body {
     }
 
     .login-button-wrapper {
-        margin-left: auto; /* Добавляем отступ слева */
+        margin-left: auto;
     }
 }
 

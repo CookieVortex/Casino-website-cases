@@ -8,8 +8,8 @@ import sign from '../assets/icons/sign.svg';
 import wifi from '../assets/icons/wifi.svg';
 import crown from '../assets/icons/crown.svg';
 import cube from '../assets/icons/cube.svg';
-import menuIcon from '../assets/icons/menu.svg'; // Импортируем иконку меню
-import smallLogo from '../assets/icons/iconBg.svg'; // Импортируем маленький логотип
+import menuIcon from '../assets/icons/menu.svg';
+import smallLogo from '../assets/icons/iconBg.svg';
 
 const Header = () => {
     const [menuOpen, setMenuOpen] = useState(false);
