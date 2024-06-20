@@ -141,6 +141,114 @@ html, body {
     display: none;
 }
 
+/* Стили для блок-обертки */
+
+.container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.blocks-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.block {
+    flex: 1;
+    margin-right: 2px;
+    box-sizing: border-box;
+}
+
+.colored-sections {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 2px;
+}
+
+.colored-section {
+    width: 170px;
+    height: 120px;
+    border-radius: 3px;
+    background-image: linear-gradient(to bottom, rgba(47, 85, 68, 0.9), rgba(37, 59, 54, 0.5)), url('iconBg.svg');
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.second-section,
+.third-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #282836;
+    height: 59px;
+    border-radius: 3px;
+    width: 100%;
+    min-width: 50px;
+    max-width: 100px;
+    flex-shrink: 0;
+}
+
+.first-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #282836;
+    border-radius: 3px;
+    width: 70px; /* Фиксированная ширина */
+    min-width: 80px; /* Минимальная ширина */
+    max-width: 100px; /* Максимальная ширина */
+    flex-shrink: 0;
+}
+
+.first-section:hover,
+.second-section:hover,
+.third-section:hover {
+    background-color: #2b2b3a;
+}
+
+.vertical-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.wifi-button-icon {
+    margin-top: 20px;
+    width: 30px;
+    height: 30px;
+    opacity: 0.2;
+    animation: fadeInOut 2s ease infinite;
+}
+
+@keyframes fadeInOut {
+    0%, 100% {
+        opacity: 0.2;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+.wifi-count {
+    font-size: 18px;
+    font-weight: bold;
+    color: aliceblue;
+}
+
+.wifi-online {
+    font-size: 10px;
+    text-transform: uppercase;
+    color: dimgrey;
+}
+
+.crown-icon,
+.cube-icon {
+    width: 15px;
+    height: 15px;
+}
+
 @media (max-width: 768px) {
     .small-logo-wrapper {
         display: flex;
@@ -205,99 +313,28 @@ html, body {
         flex-shrink: 0;
     }
 
-    .login-button-wrapper {
-        margin-left: auto;
+    .vertical-sections, .first-section {
+        display: none;
+    }
+
+    .colored-section {
+        height: 70px;
+        width: 80%;
+    }
+
+    .login-button {
+        transform: scale(0.7); /* Уменьшаем кнопку */
     }
 }
 
-.blocks-container {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-}
-
-.block {
-    flex: 1;
-    margin-right: 2px;
-    box-sizing: border-box;
-}
-
-.colored-sections {
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 2px;
-}
-
-.colored-section {
-    width: 170px;
-    height: 120px;
-    border-radius: 3px;
-    background-image: linear-gradient(to bottom, rgba(47, 85, 68, 0.9), rgba(37, 59, 54, 0.5)), url('iconBg.svg');
-    background-repeat: no-repeat;
-    background-position: center center;
-}
-
-.first-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #282836;
-    border-radius: 3px;
-}
-
-.first-section:hover,
-.second-section:hover,
-.third-section:hover {
-    background-color: #2b2b3a;
-}
-
-.vertical-sections {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
-
-.second-section,
-.third-section {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #282836;
-    height: 59px;
-    border-radius: 3px;
-}
-
-.wifi-button-icon {
-    margin-top: 20px;
-    width: 30px;
-    height: 30px;
-    opacity: 0.2;
-    animation: fadeInOut 2s ease infinite;
-}
-
-@keyframes fadeInOut {
-    0%, 100% {
-        opacity: 0.2;
-    }
-    50% {
-        opacity: 1;
+@media (max-width: 1200px) {
+    .login-button {
+        transform: scale(0.9); /* Уменьшаем кнопку */
     }
 }
 
-.wifi-count {
-    font-size: 18px;
-    font-weight: bold;
-    color: aliceblue;
-}
-
-.wifi-online {
-    font-size: 10px;
-    text-transform: uppercase;
-    color: dimgrey;
-}
-
-.crown-icon,
-.cube-icon {
-    width: 15px;
-    height: 15px;
+@media (max-width: 992px) {
+    .login-button {
+        transform: scale(0.8); /* Уменьшаем кнопку */
+    }
 }
