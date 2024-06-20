@@ -168,12 +168,24 @@ html, body {
 }
 
 .colored-section {
+    position: relative;
     width: 170px;
     height: 120px;
     border-radius: 3px;
     background-image: linear-gradient(to bottom, rgba(47, 85, 68, 0.9), rgba(37, 59, 54, 0.5)), url('iconBg.svg');
     background-repeat: no-repeat;
     background-position: center center;
+}
+
+.overlay-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    width: 90px;
+    height: 80px;
+    pointer-events: none;
 }
 
 .second-section,
@@ -196,9 +208,9 @@ html, body {
     align-items: center;
     background-color: #282836;
     border-radius: 3px;
-    width: 70px; /* Фиксированная ширина */
-    min-width: 80px; /* Минимальная ширина */
-    max-width: 100px; /* Максимальная ширина */
+    width: 70px;
+    min-width: 80px;
+    max-width: 100px;
     flex-shrink: 0;
 }
 
@@ -313,28 +325,24 @@ html, body {
         flex-shrink: 0;
     }
 
-    .vertical-sections, .first-section {
-        display: none;
-    }
-
-    .colored-section {
-        height: 70px;
-        width: 80%;
+    .block-wrapper {
+        width: 70%;
+        height: 70%;
     }
 
     .login-button {
-        transform: scale(0.7); /* Уменьшаем кнопку */
+        transform: scale(0.7);
     }
 }
 
 @media (max-width: 1200px) {
     .login-button {
-        transform: scale(0.9); /* Уменьшаем кнопку */
+        transform: scale(0.9);
     }
 }
 
 @media (max-width: 992px) {
     .login-button {
-        transform: scale(0.8); /* Уменьшаем кнопку */
+        transform: scale(0.8);
     }
 }
