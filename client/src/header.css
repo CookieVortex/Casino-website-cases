@@ -91,6 +91,11 @@ html, body {
     line-height: 1.125rem;
     font-weight: 500;
     text-transform: uppercase;
+    transition: color 0.3s ease;
+}
+
+.menu-link:hover {
+    color: #7771aa;
 }
 
 .menu-icon {
@@ -123,6 +128,10 @@ html, body {
     align-items: center;
     background-color: #c5c5ff;
     margin: 0 45px;
+}
+
+.login-button:hover {
+    background-color: #d9d9fd;
 }
 
 .login-button-icon {
@@ -167,6 +176,11 @@ html, body {
     gap: 2px;
 }
 
+.icon-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
 .colored-section {
     position: relative;
     width: 170px;
@@ -175,6 +189,10 @@ html, body {
     background-image: linear-gradient(to bottom, rgba(47, 85, 68, 0.9), rgba(37, 59, 54, 0.5)), url('iconBg.svg');
     background-repeat: no-repeat;
     background-position: center center;
+}
+
+.colored-section:hover {
+    background-image: linear-gradient(to bottom, rgba(47, 85, 68, 0.9), rgba(52, 83, 76, 0.5)), url('iconBg.svg');
 }
 
 .overlay-image {
@@ -307,23 +325,6 @@ html, body {
         padding: 10px 20px;
     }
 
-    .menu-link {
-        text-decoration: none;
-        display: flex;
-        align-items: center;
-        padding: 8px 0;
-    }
-
-    .menu-link:hover {
-        background-color: #282836;
-    }
-
-    .menu-icon {
-        margin-right: 10px;
-        width: 20px;
-        height: 20px;
-        flex-shrink: 0;
-    }
 
     .block-wrapper {
         width: 70%;

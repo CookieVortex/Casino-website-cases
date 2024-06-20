@@ -49,7 +49,7 @@ const Header = () => {
                 <div className="container">
                     <div className="header-inner">
                         <div className="small-logo-wrapper">
-                            <img src={smallLogo} alt="Маленький логотип" className="small-logo"/>
+                            <img src={smallLogo} alt="SmallLogo" className="small-logo"/>
                         </div>
 
                         <div className="logo-menu-wrapper">
