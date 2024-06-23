@@ -1,25 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './App.css';
-import CaseList from './components/CaseList';
 import Header from './components/header';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 const App = () => {
-    const [cases, setCases] = useState([]);
-
-    useEffect(() => {
-        fetch('http://localhost:3001/api/cases')
-            .then(response => response.json())
-            .then(data => setCases(data))
-            .catch(error => console.error('Error fetching cases:', error));
-    }, []);
-
     return (
-        <div>
+        <GoogleOAuthProvider clientId="616649422310-vbf57v2j34ql4qhkigom1itg1fv8i3uk.apps.googleusercontent.com">
             <Header />
-            <main>
-                <CaseList cases={cases} />
-            </main>
-        </div>
+        </GoogleOAuthProvider>
     );
 };
 

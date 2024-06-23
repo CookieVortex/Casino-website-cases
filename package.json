@@ -10,11 +10,19 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@react-oauth/google": "^0.12.1",
+    "axios": "^1.7.2",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "gapi-script": "^1.2.0",
     "lottie-web": "^5.12.2",
     "mongoose": "^8.4.1",
-    "react-lottie": "^1.2.4"
+    "passport": "^0.7.0",
+    "passport-steam": "^1.0.18",
+    "react-google-login": "^5.2.2",
+    "react-lottie": "^1.2.4",
+    "steam-login": "^0.1.7"
   }
 }

@@ -1,27 +1,46 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import '../header.css';
 
 import caseIcon1 from '../assets/icons/case.svg';
 import upgrade from '../assets/icons/upgrade.svg';
 import contract from '../assets/icons/contract.svg';
-import sign from '../assets/icons/sign.svg';
 import wifi from '../assets/icons/wifi.svg';
 import crown from '../assets/icons/crown.svg';
 import cube from '../assets/icons/cube.svg';
 import menuIcon from '../assets/icons/menu.svg';
 import smallLogo from '../assets/icons/iconBg.svg';
+import { GoogleLogin } from '@react-oauth/google';
+import sign from '../assets/icons/sign.svg';
+import Modal from './Modal'; // Импортируйте компонент Modal из вашего проекта
 
 const Header = () => {
     const [menuOpen, setMenuOpen] = useState(false);
+    const [showModal, setShowModal] = useState(false);
 
     const menuItems = [
-        {text: 'кейсы', href: '#', icon: caseIcon1},
-        {text: 'апгрейд', href: '#', icon: upgrade},
-        {text: 'контракты', href: '#', icon: contract}
+        { text: 'кейсы', href: '#', icon: caseIcon1 },
+        { text: 'апгрейд', href: '#', icon: upgrade },
+        { text: 'контракты', href: '#', icon: contract }
     ];
+
+    const openModal = () => {
+        setShowModal(true);
+    };
+
+    const closeModal = () => {
+        setShowModal(false);
+    };
 
     const toggleMenu = () => {
         setMenuOpen(!menuOpen);
+    };
+
+    const handleSuccess = (credentialResponse) => {
+        console.log(credentialResponse);
+    };
+
+    const handleError = () => {
+        console.log('Login Failed');
     };
 
     const imagePaths = [
@@ -56,9 +75,9 @@ const Header = () => {
                             <div className="logo-wrapper">
                                 <a href="/" className="logo-link">
                                     <div className="logo-large">
-                                        <img src="https://rustbox.io/assets/icons/logo.svg" alt="Логотип"
+                                        <img src="https://rustbox.io/assets/icons/logo.svg" alt="Logo"
                                              className="large-logo"/>
-                                        <img src={smallLogo} alt="Маленький логотип"
+                                        <img src={smallLogo} alt="MiniLogo"
                                              className="small-logo-in-responsive"/>
                                     </div>
                                 </a>
@@ -77,20 +96,37 @@ const Header = () => {
                                 <img src={menuIcon} alt="Menu" className="menu-icon-svg"/>
                             </button>
                         </div>
+
                         <div className="login-button-wrapper">
-                            <button className="login-button">
-                                <img src={sign} alt="Steam" className="login-button-icon"/>
-                                <span className="login-button-text">Войти</span>
+                            <button className="login-button" onClick={openModal}>
+                                <img src={sign} alt="Sign" className="sign.svg"/>
+                                <span className="login-button-text">Вход</span>
                             </button>
                         </div>
                     </div>
                 </div>
             </header>
 
+            {/* Модальное окно */}
+            <Modal isOpen={showModal} onClose={closeModal}>
+                <h2>Выполнить вход</h2>
+                <GoogleLogin
+                    onSuccess={handleSuccess}
+                    onError={handleError}
+                    render={(renderProps) => (
+                        <button
+                            className="custom-google-button"
+                            onClick={renderProps.onClick}
+                            disabled={renderProps.disabled}
+                        >
+                        </button>
+                    )}
+                />
+            </Modal>
+
             <div className="block-wrapper">
                 <div className="container">
                     <div className="blocks-container">
-
                         <div className="block first-section">
                             <div className="wifi-icon-wrapper">
                                 <img src={wifi} alt="Wifi" className="wifi-button-icon"/>
@@ -113,11 +149,9 @@ const Header = () => {
                                 {coloredSections}
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
-
         </div>
     );
 };
