@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import '../header.css';
+import {GoogleLogin} from '@react-oauth/google';
+import Modal from './Modal';
 
 import caseIcon1 from '../assets/icons/case.svg';
 import upgrade from '../assets/icons/upgrade.svg';
@@ -9,39 +11,25 @@ import crown from '../assets/icons/crown.svg';
 import cube from '../assets/icons/cube.svg';
 import menuIcon from '../assets/icons/menu.svg';
 import smallLogo from '../assets/icons/iconBg.svg';
-import { GoogleLogin } from '@react-oauth/google';
 import sign from '../assets/icons/sign.svg';
-import Modal from './Modal'; // Импортируйте компонент Modal из вашего проекта
 
 const Header = () => {
     const [menuOpen, setMenuOpen] = useState(false);
-    const [showModal, setShowModal] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const menuItems = [
-        { text: 'кейсы', href: '#', icon: caseIcon1 },
-        { text: 'апгрейд', href: '#', icon: upgrade },
-        { text: 'контракты', href: '#', icon: contract }
+        {text: 'кейсы', href: '#', icon: caseIcon1},
+        {text: 'апгрейд', href: '#', icon: upgrade},
+        {text: 'контракты', href: '#', icon: contract}
     ];
 
-    const openModal = () => {
-        setShowModal(true);
-    };
-
-    const closeModal = () => {
-        setShowModal(false);
-    };
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
 
     const toggleMenu = () => {
         setMenuOpen(!menuOpen);
     };
 
-    const handleSuccess = (credentialResponse) => {
-        console.log(credentialResponse);
-    };
-
-    const handleError = () => {
-        console.log('Login Failed');
-    };
 
     const imagePaths = [
         'https://community.akamai.steamstatic.com/economy/image/6TMcQ7eX6E0EZl2byXi7vaVKyDk_zQLX05x6eLCFM9neAckxGDf7qU2e2gu64OnAeQ7835dX52LNfDY0jhyo8DEiv5dYOaw7rLczQfG2JulcKTk/360fx360f',
@@ -107,22 +95,22 @@ const Header = () => {
                 </div>
             </header>
 
-            {/* Модальное окно */}
-            <Modal isOpen={showModal} onClose={closeModal}>
-                <h2>Выполнить вход</h2>
+
+                <Modal isOpen={isModalOpen} onClose={closeModal}>
+                <hr/>
                 <GoogleLogin
-                    onSuccess={handleSuccess}
-                    onError={handleError}
-                    render={(renderProps) => (
-                        <button
-                            className="custom-google-button"
-                            onClick={renderProps.onClick}
-                            disabled={renderProps.disabled}
-                        >
-                        </button>
-                    )}
+                    onSuccess={(response) => {
+                        console.log('Custom Google login successful', response);
+                    }}
+                    onError={() => {
+                        console.error('Custom Google login failed');
+                    }}
+                    theme="outline"
+                    size="large"
+                    text="continue_with"
                 />
             </Modal>
+
 
             <div className="block-wrapper">
                 <div className="container">
