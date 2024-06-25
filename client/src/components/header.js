@@ -16,6 +16,8 @@ import sign from '../assets/icons/sign.svg';
 const Header = () => {
     const [menuOpen, setMenuOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [user, setUser] = useState(null);
 
     const menuItems = [
         {text: 'кейсы', href: '#', icon: caseIcon1},
@@ -29,7 +31,6 @@ const Header = () => {
     const toggleMenu = () => {
         setMenuOpen(!menuOpen);
     };
-
 
     const imagePaths = [
         'https://community.akamai.steamstatic.com/economy/image/6TMcQ7eX6E0EZl2byXi7vaVKyDk_zQLX05x6eLCFM9neAckxGDf7qU2e2gu64OnAeQ7835dX52LNfDY0jhyo8DEiv5dYOaw7rLczQfG2JulcKTk/360fx360f',
@@ -86,21 +87,32 @@ const Header = () => {
                         </div>
 
                         <div className="login-button-wrapper">
-                            <button className="login-button" onClick={openModal}>
-                                <img src={sign} alt="Sign" className="sign.svg"/>
-                                <span className="login-button-text">Вход</span>
-                            </button>
+                            {isAuthenticated ? (
+                                <div className="profile-greeting">
+                                    Привет, {user && user.givenName}!
+                                    <button className="profile-button">
+                                        <span>Мой профиль</span>
+                                    </button>
+                                </div>
+                            ) : (
+                                <button className="login-button" onClick={openModal}>
+                                    <img src={sign} alt="Sign" className="sign.svg"/>
+                                    <span className="login-button-text">Вход</span>
+                                </button>
+                            )}
                         </div>
+
                     </div>
                 </div>
             </header>
 
-
-                <Modal isOpen={isModalOpen} onClose={closeModal}>
-                <hr/>
+            <Modal isOpen={isModalOpen} onClose={closeModal}>
                 <GoogleLogin
                     onSuccess={(response) => {
                         console.log('Custom Google login successful', response);
+                        setIsAuthenticated(true);
+                        setUser(response.profileObj);
+                        closeModal();
                     }}
                     onError={() => {
                         console.error('Custom Google login failed');
@@ -110,7 +122,6 @@ const Header = () => {
                     text="continue_with"
                 />
             </Modal>
-
 
             <div className="block-wrapper">
                 <div className="container">
