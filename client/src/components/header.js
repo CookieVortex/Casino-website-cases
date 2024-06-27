@@ -1,8 +1,7 @@
 import React, {useState} from 'react';
 import '../header.css';
-import {GoogleLogin} from '@react-oauth/google';
+import {GoogleLogin, useGoogleLogin} from '@react-oauth/google';
 import Modal from './Modal';
-
 import caseIcon1 from '../assets/icons/case.svg';
 import upgrade from '../assets/icons/upgrade.svg';
 import contract from '../assets/icons/contract.svg';
@@ -17,7 +16,32 @@ const Header = () => {
     const [menuOpen, setMenuOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [user, setUser] = useState(null);
+    const [profile, setProfile] = useState({});
+
+    const login = useGoogleLogin({
+        onSuccess: (response) => {
+            console.log('Login successful', response);
+            fetchUserProfile(response);
+        },
+        onError: (error) => console.log('Login Failed:', error),
+        scope: 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email'
+    });
+
+    const fetchUserProfile = async (response) => {
+        try {
+            // Extracting the ID token from response
+            const idToken = response.credential;
+
+            const res = await fetch(`https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=${idToken}`);
+            const data = await res.json();
+            console.log('Fetched user profile:', data);
+            setProfile(data);
+            setIsAuthenticated(true);
+            closeModal();
+        } catch (error) {
+            console.error('Failed to fetch user profile', error);
+        }
+    };
 
     const menuItems = [
         {text: 'кейсы', href: '#', icon: caseIcon1},
@@ -33,16 +57,16 @@ const Header = () => {
     };
 
     const imagePaths = [
-        'https://community.akamai.steamstatic.com/economy/image/6TMcQ7eX6E0EZl2byXi7vaVKyDk_zQLX05x6eLCFM9neAckxGDf7qU2e2gu64OnAeQ7835dX52LNfDY0jhyo8DEiv5dYOaw7rLczQfG2JulcKTk/360fx360f',
-        'https://steamcommunity-a.akamaihd.net/economy/image/6TMcQ7eX6E0EZl2byXi7vaVKyDk_zQLX05x6eLCFM9neAckxGDf7qU2e2gu64OnAeQ7835Je5WHNfDY0jhyo8DEiv5dYO607rLc2Rv2_pCV1NYc',
-        'https://community.akamai.steamstatic.com/economy/image/6TMcQ7eX6E0EZl2byXi7vaVKyDk_zQLX05x6eLCFM9neAckxGDf7qU2e2gu64OnAeQ7835Ff52LHfDY0jhyo8DEiv5dQOKo7rbw3Q_ndKTc8eQ/360fx360f',
-        'https://steamuserimages-a.akamaihd.net/ugc/1844802808246288843/666C70735165C0F9B434C0F7323A2C93714C03B4/',
-        'https://chicks-products.s3.amazonaws.com/2a841f71-89bc-4da7-8326-fefb8fb2ff0e',
-        'https://steamcommunity-a.akamaihd.net/economy/image/6TMcQ7eX6E0EZl2byXi7vaVKyDk_zQLX05x6eLCFM9neAckxGDf7qU2e2gu64OnAeQ7835Je5mPFfDY0jhyo8DEiv5dYPKA7rrY0Rv64OZ_IjGA',
-        'https://steamcommunity-a.akamaihd.net/economy/image/6TMcQ7eX6E0EZl2byXi7vaVKyDk_zQLX05x6eLCFM9neAckxGDf7qU2e2gu64OnAeQ7835dc5WLBfDY0jhyo8DEiv5daOK46rbczQfC_7rW9mjs',
-        'https://files.facepunch.com/rust/item/rifle.lr300_512.png',
-        'https://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpovbSsLQJfwOfBfThW-NOJlZG0hOPxNrfunWVY7sBOguzA45W72wXn-ENtMjinIICTJwM6YV3W-Vi9k73mhZW16p3NzHRnsyNzsHrdmgv3309CdQ48_A',
-        'https://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpou7uifDhzw8zAcCdD_tiJlpKKgfjLP7LWnn8fvZR30r2SpY3wiQDiqks6amqmIYaRJFQ3NAnZ_1Htlenoh5-_vMnPnWwj5HeouX7iBw',
+        'https://i.ibb.co/yNRn4sK/image1.jpg',
+        'https://i.ibb.co/Wt2TLjV/image2.jpg',
+        'https://i.ibb.co/y0YNT9R/image3.jpg',
+        'https://i.ibb.co/cg1GZfq/image4.jpg',
+        'https://i.ibb.co/BN6f4zY/image5.jpg',
+        'https://i.ibb.co/xJXPdm7/image6.jpg',
+        'https://i.ibb.co/B4H0K6Y/image7.jpg',
+        'https://i.ibb.co/xgccfJv/image8.jpg',
+        'https://i.ibb.co/YZB9mbG/image9.jpg',
+        'https://i.ibb.co/9rLDhz3/image10.jpg'
     ];
 
     const coloredSections = imagePaths.map((imageSrc, i) => (
@@ -66,8 +90,7 @@ const Header = () => {
                                     <div className="logo-large">
                                         <img src="https://rustbox.io/assets/icons/logo.svg" alt="Logo"
                                              className="large-logo"/>
-                                        <img src={smallLogo} alt="MiniLogo"
-                                             className="small-logo-in-responsive"/>
+                                        <img src={smallLogo} alt="MiniLogo" className="small-logo-in-responsive"/>
                                     </div>
                                 </a>
                             </div>
@@ -89,10 +112,7 @@ const Header = () => {
                         <div className="login-button-wrapper">
                             {isAuthenticated ? (
                                 <div className="profile-greeting">
-                                    Привет, {user && user.givenName}!
-                                    <button className="profile-button">
-                                        <span>Мой профиль</span>
-                                    </button>
+                                    <span className="greeting-text">{profile.name}!</span>
                                 </div>
                             ) : (
                                 <button className="login-button" onClick={openModal}>
@@ -101,7 +121,6 @@ const Header = () => {
                                 </button>
                             )}
                         </div>
-
                     </div>
                 </div>
             </header>
@@ -110,9 +129,7 @@ const Header = () => {
                 <GoogleLogin
                     onSuccess={(response) => {
                         console.log('Custom Google login successful', response);
-                        setIsAuthenticated(true);
-                        setUser(response.profileObj);
-                        closeModal();
+                        fetchUserProfile(response);
                     }}
                     onError={() => {
                         console.error('Custom Google login failed');

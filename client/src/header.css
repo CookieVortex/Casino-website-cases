@@ -348,3 +348,15 @@ html, body {
         transform: scale(0.8);
     }
 }
+
+.profile-greeting {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    margin-right: 40px;
+    font-family: Montserrat, sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.125rem;
+    font-weight: 600;
+    color: #c5c5d3;
+}
