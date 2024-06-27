@@ -11,12 +11,14 @@ import cube from '../assets/icons/cube.svg';
 import menuIcon from '../assets/icons/menu.svg';
 import smallLogo from '../assets/icons/iconBg.svg';
 import sign from '../assets/icons/sign.svg';
+import logout from '../assets/icons/logout.svg';
 
 const Header = () => {
     const [menuOpen, setMenuOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [profile, setProfile] = useState({});
+    const [showLogoutModal, setShowLogoutModal] = useState(false);
 
     const login = useGoogleLogin({
         onSuccess: (response) => {
@@ -29,7 +31,6 @@ const Header = () => {
 
     const fetchUserProfile = async (response) => {
         try {
-            // Extracting the ID token from response
             const idToken = response.credential;
 
             const res = await fetch(`https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=${idToken}`);
@@ -41,6 +42,20 @@ const Header = () => {
         } catch (error) {
             console.error('Failed to fetch user profile', error);
         }
+    };
+
+    const handleLogout = () => {
+        setShowLogoutModal(true);
+    };
+
+    const confirmLogout = () => {
+        setIsAuthenticated(false);
+        setProfile({name: ''});
+        setShowLogoutModal(false);
+    };
+
+    const cancelLogout = () => {
+        setShowLogoutModal(false);
     };
 
     const menuItems = [
@@ -113,12 +128,21 @@ const Header = () => {
                             {isAuthenticated ? (
                                 <div className="profile-greeting">
                                     <span className="greeting-text">{profile.name}!</span>
+                                    <img src={logout} alt="Logout" className="logout" onClick={handleLogout}/>
                                 </div>
                             ) : (
                                 <button className="login-button" onClick={openModal}>
                                     <img src={sign} alt="Sign" className="sign.svg"/>
                                     <span className="login-button-text">Вход</span>
                                 </button>
+                            )}
+
+                            {showLogoutModal && (
+                                <div className="logout-modal">
+                                    <p>Вы действительно хотите выйти?</p>
+                                    <button onClick={confirmLogout}>Да</button>
+                                    <button onClick={cancelLogout}>Отмена</button>
+                                </div>
                             )}
                         </div>
                     </div>
