@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import '../header.css';
-import {GoogleLogin, useGoogleLogin} from '@react-oauth/google';
+import {GoogleLogin} from '@react-oauth/google';
 import Modal from './Modal';
 import caseIcon1 from '../assets/icons/case.svg';
 import upgrade from '../assets/icons/upgrade.svg';
@@ -19,15 +19,6 @@ const Header = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [profile, setProfile] = useState({});
     const [showLogoutModal, setShowLogoutModal] = useState(false);
-
-    const login = useGoogleLogin({
-        onSuccess: (response) => {
-            console.log('Login successful', response);
-            fetchUserProfile(response);
-        },
-        onError: (error) => console.log('Login Failed:', error),
-        scope: 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email'
-    });
 
     const fetchUserProfile = async (response) => {
         try {

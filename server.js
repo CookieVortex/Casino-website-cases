@@ -20,10 +20,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-    res.send('Welcome to my API!'); // Пример ответа
+    res.send('Welcome to my API!');
 });
 
-const authRouter = require('./client/src/routes/auth'); // Путь к вашему файлу с роутером
+const authRouter = require('./server/routes/auth');
 app.use('/api/auth', authRouter);
 
 // Запуск сервера

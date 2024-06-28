@@ -187,14 +187,21 @@ html, body {
     width: 170px;
     height: 120px;
     border-radius: 3px;
-    background-image: linear-gradient(to bottom, rgba(47, 85, 68, 0.9), rgba(37, 59, 54, 0.5)), url('iconBg.svg');
+    background-image: linear-gradient(to bottom, rgba(47, 85, 68, 0.9), rgba(37, 59, 54, 0.5)), url('./assets/icons/iconBg.svg');
     background-repeat: no-repeat;
     background-position: center center;
 }
 
 .colored-section:hover {
-    background-image: linear-gradient(to bottom, rgba(47, 85, 68, 0.9), rgba(52, 83, 76, 0.5)), url('iconBg.svg');
+    background-image: linear-gradient(to bottom, rgba(47, 85, 68, 0.9), rgba(52, 83, 76, 0.5)), url('./assets/icons/iconBg.svg');
 }
+
+.admin-tag {
+    color: #ff0000;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
 
 .overlay-image {
     position: absolute;
@@ -375,17 +382,31 @@ html, body {
     transform: translate(-50%, -50%);
     background-color: white;
     padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
     z-index: 1000;
     text-align: center;
 }
 
 .logout-modal p {
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 .logout-modal button {
     margin: 0 10px;
-    padding: 5px 10px;
+    padding: 5px 20px;
     cursor: pointer;
 }
+
+.Settings {
+    padding: 5px;
+    cursor: pointer;
+}
+
+.user-balance {
+    margin-right: 10px;
+    font-weight: bold;
+    border: 1px solid #7771aa;
+    border-radius: 10px;
+    padding: 10px;
+}
+
