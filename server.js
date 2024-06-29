@@ -1,11 +1,16 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+require('dotenv').config();
 
+const authRouter = require('./server/routes/auth');
 const app = express();
 const PORT = process.env.PORT || 5000;
+const cors = require('cors');
+app.use(cors());
 
-mongoose.connect('mongodb://localhost:27017/casino', {
+
+mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
@@ -16,17 +21,21 @@ db.once('open', () => {
     console.log('Connected to MongoDB');
 });
 
+// Настройка Content-Security-Policy
+app.use((req, res, next) => {
+    res.setHeader('Content-Security-Policy', "script-src 'self' 'unsafe-inline'"); // Пример настройки CSP
+    next();
+});
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use('/api/auth', authRouter);
 
 app.get('/', (req, res) => {
     res.send('Welcome to my API!');
 });
 
-const authRouter = require('./server/routes/auth');
-app.use('/api/auth', authRouter);
-
-// Запуск сервера
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
