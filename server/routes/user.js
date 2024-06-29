@@ -41,22 +41,22 @@ router.get('/balance', async (req, res) => {
 
 // Маршрут для обновления баланса
 router.post('/update-balance', async (req, res) => {
-    const { googleId, balance } = req.body;
+    const {googleId, balance} = req.body;
 
     try {
         const user = await User.findOneAndUpdate(
-            { googleId },
-            { balance },
-            { new: true }
+            {googleId},
+            {balance},
+            {new: true}
         );
 
         if (!user) {
-            return res.status(404).json({ message: 'User not found' });
+            return res.status(404).json({message: 'User not found'});
         }
 
-        res.json({ message: 'Balance updated successfully', balance: user.balance });
+        res.json({message: 'Balance updated successfully', balance: user.balance});
     } catch (error) {
-        res.status(500).json({ message: 'Server error', error });
+        res.status(500).json({message: 'Server error', error});
     }
 });
 

@@ -361,11 +361,31 @@ html, body {
     color: #c5c5d3;
 }
 
+.greeting-text {
+    margin-left: 10px;
+}
+
 .logout {
     width: 15px;
     margin-left: 10px;
     padding: 5px;
     cursor: pointer;
+}
+
+.reload-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
+
+.update {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin-right: 5px; /* Пространство между кнопкой и суммой */
 }
 
 .logout-modal {
@@ -390,16 +410,17 @@ html, body {
     cursor: pointer;
 }
 
-.Settings {
-    padding: 5px;
-    cursor: pointer;
-}
-
 .balance-text {
-    margin-right: 10px;
     font-weight: bold;
     border: 1px solid #7771aa;
     border-radius: 10px;
-    padding: 10px;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    vertical-align: center;
 }
 
+.balance-container {
+    display: flex;
+    align-items: center;
+}

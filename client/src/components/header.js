@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import '../header.css';
-import { GoogleLogin } from '@react-oauth/google';
+import {GoogleLogin} from '@react-oauth/google';
 import Modal from './Modal';
 import caseIcon1 from '../assets/icons/case.svg';
 import upgrade from '../assets/icons/upgrade.svg';
@@ -12,6 +12,7 @@ import menuIcon from '../assets/icons/menu.svg';
 import smallLogo from '../assets/icons/iconBg.svg';
 import sign from '../assets/icons/sign.svg';
 import logout from '../assets/icons/logout.svg';
+import reloadIcon from '../assets/icons/reload.svg';
 
 const Header = () => {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -50,7 +51,11 @@ const Header = () => {
             const userResult = await userResponse.json();
             console.log(userResult.message);
 
-            setProfile(data);
+            setProfile({
+                googleId: data.sub,
+                email: data.email,
+                name: data.name
+            });
             setIsAuthenticated(true);
             closeModal();
         } catch (error) {
@@ -59,6 +64,10 @@ const Header = () => {
     };
 
     const fetchUserBalance = async () => {
+        if (!profile.googleId) {
+            console.error('No googleId found');
+            return;
+        }
         try {
             console.log('Fetching user balance for googleId:', profile.googleId);
 
@@ -67,31 +76,10 @@ const Header = () => {
             console.log('Fetched user balance:', data);
 
             if (data.balance !== undefined) {
-                setBalance(data.balance); // Обновляем состояние баланса на фронтенде
+                setBalance(data.balance);
             }
         } catch (error) {
             console.error('Failed to fetch user balance', error);
-        }
-    };
-
-    const updateBalance = async (newBalance) => {
-        try {
-            const response = await fetch('/api/user/update-balance', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ googleId: profile.googleId, balance: newBalance })
-            });
-
-            const data = await response.json();
-            console.log('Balance updated:', data);
-
-            if (data.balance !== undefined) {
-                setBalance(data.balance); // Обновляем состояние баланса после изменения на сервере
-            }
-        } catch (error) {
-            console.error('Failed to update balance', error);
         }
     };
 
@@ -101,7 +89,7 @@ const Header = () => {
 
     const confirmLogout = () => {
         setIsAuthenticated(false);
-        setProfile({ name: '' });
+        setProfile({});
         setShowLogoutModal(false);
     };
 
@@ -110,9 +98,9 @@ const Header = () => {
     };
 
     const menuItems = [
-        { text: 'кейсы', href: '#', icon: caseIcon1 },
-        { text: 'апгрейд', href: '#', icon: upgrade },
-        { text: 'контракты', href: '#', icon: contract }
+        {text: 'кейсы', href: '#', icon: caseIcon1},
+        {text: 'апгрейд', href: '#', icon: upgrade},
+        {text: 'контракты', href: '#', icon: contract}
     ];
 
     const openModal = () => setIsModalOpen(true);
@@ -137,7 +125,7 @@ const Header = () => {
 
     const coloredSections = imagePaths.map((imageSrc, i) => (
         <div className="colored-section" key={i}>
-            <img src={imageSrc} alt={`Section ${i + 1}`} className="overlay-image" />
+            <img src={imageSrc} alt={`Section ${i + 1}`} className="overlay-image"/>
         </div>
     ));
 
@@ -147,15 +135,16 @@ const Header = () => {
                 <div className="container">
                     <div className="header-inner">
                         <div className="small-logo-wrapper">
-                            <img src={smallLogo} alt="SmallLogo" className="small-logo" />
+                            <img src={smallLogo} alt="SmallLogo" className="small-logo"/>
                         </div>
 
                         <div className="logo-menu-wrapper">
                             <div className="logo-wrapper">
                                 <a href="/" className="logo-link">
                                     <div className="logo-large">
-                                        <img src="https://rustbox.io/assets/icons/logo.svg" alt="Logo" className="large-logo" />
-                                        <img src={smallLogo} alt="MiniLogo" className="small-logo-in-responsive" />
+                                        <img src="https://rustbox.io/assets/icons/logo.svg" alt="Logo"
+                                             className="large-logo"/>
+                                        <img src={smallLogo} alt="MiniLogo" className="small-logo-in-responsive"/>
                                     </div>
                                 </a>
                             </div>
@@ -163,27 +152,34 @@ const Header = () => {
                                 {menuItems.map((item, index) => (
                                     <span key={index} className="menu-item">
                                         <a href={item.href} className="menu-link">
-                                            <img src={item.icon} alt={item.text} className="menu-icon" />
+                                            <img src={item.icon} alt={item.text} className="menu-icon"/>
                                             {item.text}
                                         </a>
                                     </span>
                                 ))}
                             </nav>
                             <button className="menu-toggle" onClick={toggleMenu}>
-                                <img src={menuIcon} alt="Menu" className="menu-icon-svg" />
+                                <img src={menuIcon} alt="Menu" className="menu-icon-svg"/>
                             </button>
                         </div>
 
                         <div className="login-button-wrapper">
                             {isAuthenticated ? (
                                 <div className="profile-greeting">
-                                    <span className="balance-text">₽ {balance.toFixed(2)}</span> {/* Отображаем числовое значение баланса */}
+                                    <button onClick={fetchUserBalance} className="update">
+                                        <img src={reloadIcon} alt="Reload" className="reload-icon"/>
+                                    </button>
+                                    <span className="balance-container">
+                                        <span className="balance-text">€ {balance.toFixed(2)}</span>
+                                    </span>
                                     <span className="greeting-text">{profile.name}!</span>
                                     <img src={logout} alt="Logout" className="logout" onClick={handleLogout}/>
                                 </div>
+
+
                             ) : (
                                 <button className="login-button" onClick={openModal}>
-                                    <img src={sign} alt="Sign" className="sign.svg" />
+                                    <img src={sign} alt="Sign" className="sign.svg"/>
                                     <span className="login-button-text">Вход</span>
                                 </button>
                             )}
@@ -196,8 +192,10 @@ const Header = () => {
                                 </div>
                             )}
                         </div>
+
                     </div>
                 </div>
+
             </header>
 
             <Modal isOpen={isModalOpen} onClose={closeModal}>
@@ -220,7 +218,7 @@ const Header = () => {
                     <div className="blocks-container">
                         <div className="block first-section">
                             <div className="wifi-icon-wrapper">
-                                <img src={wifi} alt="Wifi" className="wifi-button-icon" />
+                                <img src={wifi} alt="Wifi" className="wifi-button-icon"/>
                             </div>
                             <span className="wifi-count">1</span>
                             <span className="wifi-online">online</span>
@@ -228,10 +226,10 @@ const Header = () => {
 
                         <div className="block vertical-sections">
                             <div className="second-section">
-                                <img src={crown} alt="Crown" className="crown-icon" />
+                                <img src={crown} alt="Crown" className="crown-icon"/>
                             </div>
                             <div className="third-section">
-                                <img src={cube} alt="Cube" className="cube-icon" />
+                                <img src={cube} alt="Cube" className="cube-icon"/>
                             </div>
                         </div>
 
