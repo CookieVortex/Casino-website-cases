@@ -196,13 +196,6 @@ html, body {
     background-image: linear-gradient(to bottom, rgba(47, 85, 68, 0.9), rgba(52, 83, 76, 0.5)), url('./assets/icons/iconBg.svg');
 }
 
-.admin-tag {
-    color: #ff0000;
-    font-weight: bold;
-    margin-left: 10px;
-}
-
-
 .overlay-image {
     position: absolute;
     top: 50%;
@@ -402,7 +395,7 @@ html, body {
     cursor: pointer;
 }
 
-.user-balance {
+.balance-text {
     margin-right: 10px;
     font-weight: bold;
     border: 1px solid #7771aa;

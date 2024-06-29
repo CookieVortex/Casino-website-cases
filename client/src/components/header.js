@@ -118,6 +118,7 @@ const Header = () => {
                         <div className="login-button-wrapper">
                             {isAuthenticated ? (
                                 <div className="profile-greeting">
+                                    <span className="balance-text">₽</span>
                                     <span className="greeting-text">{profile.name}!</span>
                                     <img src={logout} alt="Logout" className="logout" onClick={handleLogout}/>
                                 </div>
