@@ -5,14 +5,12 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
-// Middleware для авторизации по роли
 const authorize = (role) => {
     return (req, res, next) => {
-        // Здесь проверяется роль пользователя на соответствие требуемой роли (admin, user и т.д.)
         if (req.user && req.user.role === role) {
-            next(); // Продолжаем выполнение запроса, если пользователь авторизован с требуемой ролью
+            next();
         } else {
-            res.status(403).json({ message: 'Unauthorized' }); // Отказ в доступе, если пользователь не авторизован
+            res.status(403).json({ message: 'Unauthorized' });
         }
     };
 };

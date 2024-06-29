@@ -32,6 +32,7 @@
     "querystring-es3": "^0.2.1",
     "react-google-login": "^5.2.2",
     "react-lottie": "^1.2.4",
-    "steam-login": "^0.1.7"
+    "steam-login": "^0.1.7",
+    "uuid": "^10.0.0"
   }
 }

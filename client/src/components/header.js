@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../header.css';
 import { GoogleLogin } from '@react-oauth/google';
 import Modal from './Modal';
@@ -19,6 +19,13 @@ const Header = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [profile, setProfile] = useState({});
     const [showLogoutModal, setShowLogoutModal] = useState(false);
+    const [balance, setBalance] = useState(0);
+
+    useEffect(() => {
+        if (profile.googleId) {
+            fetchUserBalance();
+        }
+    }, [profile]);
 
     const fetchUserProfile = async (response) => {
         try {
@@ -28,7 +35,6 @@ const Header = () => {
             const data = await res.json();
             console.log('Fetched user profile:', data);
 
-            // Отправляем данные пользователя на сервер
             const userResponse = await fetch('/api/user/add', {
                 method: 'POST',
                 headers: {
@@ -49,6 +55,43 @@ const Header = () => {
             closeModal();
         } catch (error) {
             console.error('Failed to fetch user profile', error);
+        }
+    };
+
+    const fetchUserBalance = async () => {
+        try {
+            console.log('Fetching user balance for googleId:', profile.googleId);
+
+            const response = await fetch(`/api/user/balance?googleId=${profile.googleId}`);
+            const data = await response.json();
+            console.log('Fetched user balance:', data);
+
+            if (data.balance !== undefined) {
+                setBalance(data.balance); // Обновляем состояние баланса на фронтенде
+            }
+        } catch (error) {
+            console.error('Failed to fetch user balance', error);
+        }
+    };
+
+    const updateBalance = async (newBalance) => {
+        try {
+            const response = await fetch('/api/user/update-balance', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ googleId: profile.googleId, balance: newBalance })
+            });
+
+            const data = await response.json();
+            console.log('Balance updated:', data);
+
+            if (data.balance !== undefined) {
+                setBalance(data.balance); // Обновляем состояние баланса после изменения на сервере
+            }
+        } catch (error) {
+            console.error('Failed to update balance', error);
         }
     };
 
@@ -134,9 +177,9 @@ const Header = () => {
                         <div className="login-button-wrapper">
                             {isAuthenticated ? (
                                 <div className="profile-greeting">
-                                    <span className="balance-text">₽</span>
+                                    <span className="balance-text">₽ {balance.toFixed(2)}</span> {/* Отображаем числовое значение баланса */}
                                     <span className="greeting-text">{profile.name}!</span>
-                                    <img src={logout} alt="Logout" className="logout" onClick={handleLogout} />
+                                    <img src={logout} alt="Logout" className="logout" onClick={handleLogout}/>
                                 </div>
                             ) : (
                                 <button className="login-button" onClick={openModal}>

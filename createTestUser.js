@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const { v4: uuidv4 } = require('uuid');
 const User = require('./server/models/User');
 
 // Загрузка переменной окружения, если она не была загружена
@@ -18,15 +19,18 @@ async function main() {
         });
         console.log('Подключение к MongoDB установлено');
 
-        // Хеширование пароля
         const hashedPassword = await bcrypt.hash('123123', 10);
 
-        // Создание нового пользователя с указанием имени, роли и других полей
+        // Генерация нового уникального googleId с помощью uuid
+        const googleId = uuidv4();
+
         const newUser = new User({
-            name: 'Maxim Golubev',
-            email: 'detailestonia@gmail.com',
+            googleId: googleId,
+            email: 'test@test.com',
+            name: 'Admin Admin',
             password: hashedPassword,
             role: 'admin',
+            balance: 100
         });
 
         // Сохранение пользователя в базе данных
