@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import '../header.css';
-import {GoogleLogin} from '@react-oauth/google';
+import { GoogleLogin } from '@react-oauth/google';
 import Modal from './Modal';
 import caseIcon1 from '../assets/icons/case.svg';
 import upgrade from '../assets/icons/upgrade.svg';
@@ -27,6 +27,23 @@ const Header = () => {
             const res = await fetch(`https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=${idToken}`);
             const data = await res.json();
             console.log('Fetched user profile:', data);
+
+            // Отправляем данные пользователя на сервер
+            const userResponse = await fetch('/api/user/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    googleId: data.sub,
+                    email: data.email,
+                    name: data.name
+                })
+            });
+
+            const userResult = await userResponse.json();
+            console.log(userResult.message);
+
             setProfile(data);
             setIsAuthenticated(true);
             closeModal();
@@ -41,7 +58,7 @@ const Header = () => {
 
     const confirmLogout = () => {
         setIsAuthenticated(false);
-        setProfile({name: ''});
+        setProfile({ name: '' });
         setShowLogoutModal(false);
     };
 
@@ -50,9 +67,9 @@ const Header = () => {
     };
 
     const menuItems = [
-        {text: 'кейсы', href: '#', icon: caseIcon1},
-        {text: 'апгрейд', href: '#', icon: upgrade},
-        {text: 'контракты', href: '#', icon: contract}
+        { text: 'кейсы', href: '#', icon: caseIcon1 },
+        { text: 'апгрейд', href: '#', icon: upgrade },
+        { text: 'контракты', href: '#', icon: contract }
     ];
 
     const openModal = () => setIsModalOpen(true);
@@ -77,7 +94,7 @@ const Header = () => {
 
     const coloredSections = imagePaths.map((imageSrc, i) => (
         <div className="colored-section" key={i}>
-            <img src={imageSrc} alt={`Section ${i + 1}`} className="overlay-image"/>
+            <img src={imageSrc} alt={`Section ${i + 1}`} className="overlay-image" />
         </div>
     ));
 
@@ -87,16 +104,15 @@ const Header = () => {
                 <div className="container">
                     <div className="header-inner">
                         <div className="small-logo-wrapper">
-                            <img src={smallLogo} alt="SmallLogo" className="small-logo"/>
+                            <img src={smallLogo} alt="SmallLogo" className="small-logo" />
                         </div>
 
                         <div className="logo-menu-wrapper">
                             <div className="logo-wrapper">
                                 <a href="/" className="logo-link">
                                     <div className="logo-large">
-                                        <img src="https://rustbox.io/assets/icons/logo.svg" alt="Logo"
-                                             className="large-logo"/>
-                                        <img src={smallLogo} alt="MiniLogo" className="small-logo-in-responsive"/>
+                                        <img src="https://rustbox.io/assets/icons/logo.svg" alt="Logo" className="large-logo" />
+                                        <img src={smallLogo} alt="MiniLogo" className="small-logo-in-responsive" />
                                     </div>
                                 </a>
                             </div>
@@ -104,14 +120,14 @@ const Header = () => {
                                 {menuItems.map((item, index) => (
                                     <span key={index} className="menu-item">
                                         <a href={item.href} className="menu-link">
-                                            <img src={item.icon} alt={item.text} className="menu-icon"/>
+                                            <img src={item.icon} alt={item.text} className="menu-icon" />
                                             {item.text}
                                         </a>
                                     </span>
                                 ))}
                             </nav>
                             <button className="menu-toggle" onClick={toggleMenu}>
-                                <img src={menuIcon} alt="Menu" className="menu-icon-svg"/>
+                                <img src={menuIcon} alt="Menu" className="menu-icon-svg" />
                             </button>
                         </div>
 
@@ -120,11 +136,11 @@ const Header = () => {
                                 <div className="profile-greeting">
                                     <span className="balance-text">₽</span>
                                     <span className="greeting-text">{profile.name}!</span>
-                                    <img src={logout} alt="Logout" className="logout" onClick={handleLogout}/>
+                                    <img src={logout} alt="Logout" className="logout" onClick={handleLogout} />
                                 </div>
                             ) : (
                                 <button className="login-button" onClick={openModal}>
-                                    <img src={sign} alt="Sign" className="sign.svg"/>
+                                    <img src={sign} alt="Sign" className="sign.svg" />
                                     <span className="login-button-text">Вход</span>
                                 </button>
                             )}
@@ -161,7 +177,7 @@ const Header = () => {
                     <div className="blocks-container">
                         <div className="block first-section">
                             <div className="wifi-icon-wrapper">
-                                <img src={wifi} alt="Wifi" className="wifi-button-icon"/>
+                                <img src={wifi} alt="Wifi" className="wifi-button-icon" />
                             </div>
                             <span className="wifi-count">1</span>
                             <span className="wifi-online">online</span>
@@ -169,10 +185,10 @@ const Header = () => {
 
                         <div className="block vertical-sections">
                             <div className="second-section">
-                                <img src={crown} alt="Crown" className="crown-icon"/>
+                                <img src={crown} alt="Crown" className="crown-icon" />
                             </div>
                             <div className="third-section">
-                                <img src={cube} alt="Cube" className="cube-icon"/>
+                                <img src={cube} alt="Cube" className="cube-icon" />
                             </div>
                         </div>
 

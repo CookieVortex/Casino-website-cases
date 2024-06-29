@@ -23,10 +23,10 @@ async function main() {
 
         // Создание нового пользователя с указанием имени, роли и других полей
         const newUser = new User({
-            name: 'Test User',
-            email: 'test@example.com',
+            name: 'Maxim Golubev',
+            email: 'detailestonia@gmail.com',
             password: hashedPassword,
-            role: 'admin', // Установите 'admin' или 'user' в зависимости от роли
+            role: 'admin',
         });
 
         // Сохранение пользователя в базе данных

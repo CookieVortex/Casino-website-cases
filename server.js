@@ -1,36 +1,37 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 require('dotenv').config();
 
+const userRouter = require('./server/routes/user');
 const authRouter = require('./server/routes/auth');
+
 const app = express();
 const PORT = process.env.PORT || 5000;
-const cors = require('cors');
-app.use(cors());
 
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
-const db = mongoose.connection;
 
+const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.once('open', () => {
     console.log('Connected to MongoDB');
 });
 
-// Настройка Content-Security-Policy
 app.use((req, res, next) => {
-    res.setHeader('Content-Security-Policy', "script-src 'self' 'unsafe-inline'"); // Пример настройки CSP
+    res.setHeader('Content-Security-Policy', "script-src 'self' 'unsafe-inline'");
     next();
 });
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
 app.use('/api/auth', authRouter);
+app.use('/api/user', userRouter);
 
 app.get('/', (req, res) => {
     res.send('Welcome to my API!');
