@@ -151,7 +151,6 @@ html, body {
     display: none;
 }
 
-/* Стили для блок-обертки */
 
 .container {
     display: flex;
@@ -373,8 +372,7 @@ html, body {
 }
 
 .reload-icon {
-    width: 20px;
-    height: 20px;
+    width: 15px;
     margin-right: 5px;
 }
 
