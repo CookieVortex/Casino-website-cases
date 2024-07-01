@@ -17,6 +17,7 @@ const Profile = () => {
                 <div className="profile-details">
                     <span className="profile-name">{profile.name}</span>
                     <span className="profile-email">{profile.email}</span>
+                    <span className="profile-phone">{profile.contactphone}</span>
                 </div>
             </div>
             <div className="section">Section 2</div>
