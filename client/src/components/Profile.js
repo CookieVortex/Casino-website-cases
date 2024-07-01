@@ -4,7 +4,7 @@ import './Profile.css';
 
 const Profile = () => {
     const location = useLocation();
-    const {profile} = location.state || {};
+    const {profile, balance} = location.state || {};
 
     if (!profile) {
         return <div>Profile data is not available</div>;
@@ -17,10 +17,11 @@ const Profile = () => {
                 <div className="profile-details">
                     <span className="profile-name">{profile.name}</span>
                     <span className="profile-email">{profile.email}</span>
-                    <span className="profile-phone">{profile.contactphone}</span>
                 </div>
             </div>
-            <div className="section">Section 2</div>
+            <div className="section">
+
+            </div>
             <div className="section">Section 3</div>
         </div>
     );
