@@ -50,7 +50,7 @@ const Profile = () => {
                             <span className="info-id">{profile.googleId}</span>
                         </button>
                     </a>
-                    <button className="button2"><img src={Wallet} alt="Wallet" className="wallet-icon"/>22</button>
+                    <div className="button2"><img src={Wallet} alt="Wallet" className="wallet-icon"/></div>
                     <button className="button3">3</button>
                     <button className="button4">4</button>
                 </div>
@@ -60,7 +60,7 @@ const Profile = () => {
             </div>
             <div className="section">Раздел 3</div>
             <Tooltip anchorSelect=".my-anchor-element" place="top">
-                Copy
+                Скопировать
             </Tooltip>
 
         </div>
