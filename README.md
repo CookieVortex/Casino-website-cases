@@ -55,7 +55,7 @@ The `Modal` component is used for displaying the Google OAuth login interface.
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/case-opening-app.git
+   git clone https://github.com/CookieVortex/case-opening-app.git
 Navigate to the project directory:
 bash
 
