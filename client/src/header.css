@@ -43,20 +43,10 @@ html, body {
     text-decoration: none;
 }
 
-.logo-large {
-    padding: 12px;
-}
-
-.small-logo {
-    display: none;
-}
-
-.small-logo-in-responsive {
-    display: none;
-}
-
-.large-logo {
-    display: block;
+.big-logo {
+    padding: 10px;
+    width: 60px;
+    margin-right: 90px;
 }
 
 .menu {
@@ -284,6 +274,10 @@ html, body {
         display: flex;
         align-items: center;
         margin-right: 10px;
+    }
+
+    .big-logo {
+        display: none;
     }
 
     .small-logo {

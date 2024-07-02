@@ -14,6 +14,7 @@ import smallLogo from '../assets/icons/iconBg.svg';
 import sign from '../assets/icons/sign.svg';
 import logout from '../assets/icons/logout.svg';
 import reloadIcon from '../assets/icons/reload.svg';
+import logo from '../assets/icons/logo.svg';
 
 const Header = () => {
     const navigate = useNavigate();
@@ -135,8 +136,7 @@ const Header = () => {
                             <div className="logo-wrapper">
                                 <a href="/" className="logo-link">
                                     <div className="logo-large">
-                                        <img src="https://rustbox.io/assets/icons/logo.svg" alt="Logo" className="large-logo" />
-                                        <img src={smallLogo} alt="MiniLogo" className="small-logo-in-responsive" />
+                                        <img src={logo} alt="MiniLogo" className="big-logo"/>
                                     </div>
                                 </a>
                             </div>
