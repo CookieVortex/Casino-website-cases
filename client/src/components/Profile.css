@@ -5,6 +5,7 @@
     flex-direction: row;
     height: auto;
     overflow: hidden;
+    padding: 20px;
 }
 
 .section1 {
@@ -12,9 +13,12 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     background-color: #282836;
     border-radius: 10px;
+    padding: 20px;
+    max-width: 800px;
+    margin: 10px 0;
 }
 
 .profile-top {
@@ -26,15 +30,14 @@
 .profile-left {
     display: flex;
     align-items: center;
+    margin-right: 5%;
 }
 
 .profile-right {
     display: flex;
-    color: #c5c5d3;
-    font-weight: bold;
-    font-size: 15px;
-    justify-content: end;
-    min-width: 300px;
+    align-items: center;
+    justify-content: flex-end;
+    max-width: calc(100% - 150px);
 }
 
 .form-container {
@@ -42,7 +45,7 @@
     justify-content: space-between;
     align-items: center;
     margin-top: 20px;
-    width: 100%;
+    width: 98%;
 }
 
 .input-field {
@@ -65,7 +68,7 @@
     cursor: pointer;
 }
 
-.save-button:hover {
+.save-button:hover, .button3:hover, .button4:hover {
     background-color: #353549;
     border: none;
 }
@@ -82,6 +85,7 @@
 .avatar {
     border-radius: 20%;
     width: 25%;
+    padding: 10px;
 }
 
 .profile-details {
@@ -125,19 +129,15 @@
     position: relative;
 }
 
-.button2 .wallet-icon {
-    width: 20px;
+.setprofile, .logoutprofile, .wallet-icon {
+    width: 17px;
     height: 20px;
-    background-image: url('../assets/icons/wallet.svg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
 }
 
 .button1 {
     display: grid;
     padding: 10px;
-    width: 15vh;
+    width: 140px;
     height: 60px;
     border-radius: 10px;
     margin-right: 5px;
@@ -147,7 +147,6 @@
     font-size: 15px;
     border: 1px solid #575773;
     cursor: pointer;
-    min-width: 150px;
 }
 
 .button1:hover {
@@ -167,6 +166,7 @@
     margin-bottom: -5px;
 }
 
+
 .section1, .section {
     flex: 1;
     display: flex;
@@ -176,69 +176,7 @@
     margin: 5px;
     border-radius: 10px;
     padding: 30px;
+    max-width: 500px;
 }
 
-@media (max-width: 1250px) {
-    .section1, .section {
-        flex-direction: column;
-        width: 90%;
-    }
-}
 
-@media (max-width: 800px) {
-    .profile {
-        flex-direction: column;
-    }
-
-    .avatar {
-        width: 8%;
-        margin-bottom: 20px;
-    }
-
-    .profile-details {
-        font-size: 25px;
-    }
-
-    .section1, .section {
-        min-height: 100px;
-        align-items: center;
-        padding: 4%;
-    }
-}
-
-@media (max-width: 580px) {
-    .section1, .section {
-        align-items: center;
-        min-height: 100px;
-        padding: 4%;
-    }
-
-    .profile-top {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .profile-left, .profile-right {
-        margin: 0;
-        justify-content: center;
-    }
-
-    .button2, .button3, .button4 {
-        display: none;
-    }
-
-    .form-container {
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-    }
-
-    .input-field {
-        width: 90%;
-        margin: 10px 0;
-    }
-
-    .save-button {
-        width: 90%;
-    }
-}

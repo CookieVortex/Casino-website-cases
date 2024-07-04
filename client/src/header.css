@@ -45,8 +45,7 @@ html, body {
 
 .big-logo {
     padding: 10px;
-    width: 60px;
-    margin-right: 90px;
+    width: 160px;
 }
 
 .menu {
@@ -269,7 +268,7 @@ html, body {
     height: 15px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 834px) {
     .small-logo-wrapper {
         display: flex;
         align-items: center;
@@ -283,6 +282,7 @@ html, body {
     .small-logo {
         width: 30px;
         height: auto;
+        padding: 20px;
     }
 
     .large-logo {
@@ -296,7 +296,7 @@ html, body {
     .menu {
         display: none;
         position: absolute;
-        top: 75px;
+        top: 55px;
         left: 0;
         right: 0;
         background-color: #1e1e29;
@@ -318,7 +318,6 @@ html, body {
         margin: 5px 0;
         padding: 10px 20px;
     }
-
 
     .block-wrapper {
         width: 70%;
@@ -379,7 +378,7 @@ html, body {
     cursor: pointer;
     display: flex;
     align-items: center;
-    margin-right: 5px; /* Пространство между кнопкой и суммой */
+    margin-right: 5px;
 }
 
 .logout-modal {

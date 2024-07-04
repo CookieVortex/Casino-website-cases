@@ -5,6 +5,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Paper from "../assets/icons/paper.svg";
 import Wallet from "../assets/icons/wallet.svg";
+import setprofile from "../assets/icons/setprofile.svg";
+import logoutprofile from "../assets/icons/logoutprofile.svg";
 import { Tooltip } from 'react-tooltip';
 
 const Profile = () => {
@@ -34,6 +36,9 @@ const Profile = () => {
         console.log("Сохранено:", inputValue);
     };
 
+    // Разделение имени и фамилии
+    const firstName = profile.name.split(' ')[0];
+
     return (
         <div className="profile">
             <ToastContainer
@@ -46,20 +51,22 @@ const Profile = () => {
                     <div className="profile-left">
                         <img src={profile.picture} className="avatar" alt={profile.name} />
                         <div className="profile-details">
-                            <span className="profile-name">{profile.name}</span>
+                            <span className="profile-name">{firstName}</span>
                         </div>
                     </div>
 
                     <div className="profile-right">
                         <a className="my-anchor-element">
                             <button onClick={() => copyTextToClipboard(profile.googleId)} className="button1">
-                                <span className="info-button"><img src={Paper} alt="Paper" className="paper-icon" />ID</span>
+                                <span className="info-button"><img src={Paper} alt="Paper"
+                                                                   className="paper-icon" />ID</span>
                                 <span className="info-id">{profile.googleId}</span>
                             </button>
                         </a>
                         <div className="button2"><img src={Wallet} alt="Wallet" className="wallet-icon" /></div>
-                        <button className="button3">3</button>
-                        <button className="button4">4</button>
+                        <div className="button3"><img src={setprofile} alt="SettingsProfile" className="setprofile" />
+                        </div>
+                        <div className="button4"><img src={logoutprofile} alt="Quit" className="logoutprofile" /></div>
                     </div>
                 </div>
                 <div className="form-container">
