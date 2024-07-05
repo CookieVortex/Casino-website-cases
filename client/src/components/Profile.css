@@ -166,17 +166,60 @@
     margin-bottom: -5px;
 }
 
-
 .section1, .section {
     flex: 1;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-between;
+    align-items: flex-start;
     background-color: #282836;
     margin: 5px;
     border-radius: 10px;
-    padding: 30px;
-    max-width: 500px;
+    padding: 20px;
+    max-width: 400px;
+}
+
+/* Стили для раздела 2 */
+.case-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.case-title {
+    font-size: 18px;
+    color: #c5c5d3;
+    margin: 10px 0;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.case-title-bonus {
+    font-size: 15px;
+    color: #c5c5d3;
+    font-weight: 500;
+}
+
+.open-button {
+    padding: 15px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #323245;
+    color: #c4c4d2;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 45px;
+    align-self: flex-start;
+}
+
+.open-button:hover {
+    background-color: #353549;
+}
+
+.case-image {
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
 }
 
 
