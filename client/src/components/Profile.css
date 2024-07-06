@@ -3,25 +3,14 @@
     display: flex;
     justify-content: center;
     flex-direction: row;
-    height: auto;
+    height: 170px;
     overflow: hidden;
     margin-top: 40px;
-}
-
-.section1 {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #282836;
-    border-radius: 10px;
 }
 
 .profile-top {
     display: flex;
     justify-content: space-between;
-    width: 100%;
 }
 
 .profile-left {
@@ -65,15 +54,6 @@
 .save-button:hover, .button3:hover, .button4:hover {
     background-color: #353549;
     border: none;
-}
-
-.section {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #282836;
-    border-radius: 10px;
 }
 
 .avatar {
@@ -152,10 +132,10 @@
 .section1 {
     flex: 1;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    align-items: end;
+    align-items: center;
     background-color: #282836;
-    margin: 5px;
     border-radius: 10px;
     padding: 20px;
     max-width: 500px;
@@ -165,14 +145,12 @@
     flex: 1;
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
     background-color: #282836;
-    margin: 5px;
+    max-width: 400px;
     border-radius: 10px;
     padding: 20px;
-    max-width: 350px;
+    margin-left: 5px;
 }
-
 
 /* Стили для раздела 2 */
 
@@ -186,7 +164,6 @@
 .case-title {
     font-size: 18px;
     color: #c5c5d3;
-    margin: 10px 0;
     font-weight: 700;
     text-transform: uppercase;
 }

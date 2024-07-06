@@ -80,7 +80,7 @@ const Profile = () => {
                     </div>
 
                     <div className="profile-right">
-                    <a className="my-anchor-element">
+                        <a className="my-anchor-element">
                             <button onClick={() => copyTextToClipboard(profile.googleId)} className="button1">
                                 <span className="info-button"><img src={Paper} alt="Paper"
                                                                    className="paper-icon"/>ID</span>
@@ -120,6 +120,7 @@ const Profile = () => {
                 </div>
                 <img src={con2} alt="Case" className="case-image"/>
             </div>
+
             <Tooltip anchorSelect=".my-anchor-element" place="top">
                 Скопировать
             </Tooltip>
