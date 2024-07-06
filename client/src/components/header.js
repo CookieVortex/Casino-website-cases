@@ -13,8 +13,8 @@ import menuIcon from '../assets/icons/menu.svg';
 import smallLogo from '../assets/icons/iconBg.svg';
 import sign from '../assets/icons/sign.svg';
 import logout from '../assets/icons/logout.svg';
-import reloadIcon from '../assets/icons/reload.svg';
 import logo from '../assets/icons/logo.svg';
+import Cookies from 'js-cookie';
 
 const Header = () => {
     const navigate = useNavigate();
@@ -22,14 +22,15 @@ const Header = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [profile, setProfile] = useState({});
-    const [showLogoutModal, setShowLogoutModal] = useState(false);
     const [balance, setBalance] = useState(0);
 
     useEffect(() => {
-        if (profile.googleId) {
-            fetchUserBalance();
+        const storedProfile = Cookies.get('userProfile');
+        if (storedProfile) {
+            setProfile(JSON.parse(storedProfile));
+            setIsAuthenticated(true);
         }
-    }, [profile.googleId]);
+    }, []);
 
     const fetchUserProfile = async (response) => {
         try {
@@ -57,6 +58,12 @@ const Header = () => {
                 name: data.name,
                 picture: data.picture
             });
+            Cookies.set('userProfile', JSON.stringify({
+                googleId: data.sub,
+                email: data.email,
+                name: data.name,
+                picture: data.picture
+            }), { expires: 7 });
             setIsAuthenticated(true);
             closeModal();
         } catch (error) {
@@ -80,18 +87,17 @@ const Header = () => {
         }
     };
 
-    const handleLogout = () => {
-        setShowLogoutModal(true);
-    };
+    useEffect(() => {
+        if (profile.googleId) {
+            fetchUserBalance();
+        }
+    }, [profile.googleId]);
 
-    const confirmLogout = () => {
+    const handleLogout = () => {
         setIsAuthenticated(false);
         setProfile({});
-        setShowLogoutModal(false);
-    };
-
-    const cancelLogout = () => {
-        setShowLogoutModal(false);
+        Cookies.remove('userProfile');
+        navigate('/');
     };
 
     const menuItems = [
@@ -136,7 +142,7 @@ const Header = () => {
                             <div className="logo-wrapper">
                                 <a href="/" className="logo-link">
                                     <div className="logo-large">
-                                        <img src={logo} alt="MiniLogo" className="big-logo"/>
+                                        <img src={logo} alt="MiniLogo" className="big-logo" />
                                     </div>
                                 </a>
                             </div>
@@ -158,13 +164,12 @@ const Header = () => {
                         <div className="login-button-wrapper">
                             {isAuthenticated ? (
                                 <div className="profile-greeting">
-                                    <button onClick={fetchUserBalance} className="update">
-                                        <img src={reloadIcon} alt="Reload" className="reload-icon" />
-                                    </button>
+
                                     <span className="balance-container">
                                         <span className="balance-text">€ {balance.toFixed(2)}</span>
                                     </span>
-                                    <span className="greeting-text" onClick={() => navigate('/profile', { state: { profile } })}>
+                                    <span className="greeting-text"
+                                          onClick={() => navigate('/profile', { state: { profile } })}>
                                         {profile.name}!
                                     </span>
                                     <img src={logout} alt="Logout" className="logout" onClick={handleLogout} />
@@ -174,14 +179,6 @@ const Header = () => {
                                     <img src={sign} alt="Sign" className="sign.svg" />
                                     <span className="login-button-text">Вход</span>
                                 </button>
-                            )}
-
-                            {showLogoutModal && (
-                                <div className="logout-modal">
-                                    <p>Вы действительно хотите выйти?</p>
-                                    <button onClick={confirmLogout}>Да</button>
-                                    <button onClick={cancelLogout}>Отмена</button>
-                                </div>
                             )}
                         </div>
                     </div>

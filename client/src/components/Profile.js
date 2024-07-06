@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useLocation} from 'react-router-dom';
 import './Profile.css';
 import {ToastContainer, toast} from 'react-toastify';
@@ -15,6 +15,13 @@ const Profile = () => {
     const {profile} = location.state || {};
     const [copySuccess, setCopySuccess] = useState(false);
     const [inputValue, setInputValue] = useState("");
+    const [balance, setBalance] = useState(0);
+
+    useEffect(() => {
+        if (profile && profile.googleId) {
+            fetchUserBalance();
+        }
+    }, [profile]);
 
     if (!profile) {
         return <div>Данные профиля недоступны</div>;
@@ -33,12 +40,27 @@ const Profile = () => {
     };
 
     const handleSave = () => {
-        // Логика сохранения данных из inputValue
         console.log("Сохранено:", inputValue);
     };
 
     // Разделение имени и фамилии
     const firstName = profile.name.split(' ')[0];
+
+    const fetchUserBalance = async () => {
+        if (!profile.googleId) {
+            console.error('Google ID не найден');
+            return;
+        }
+        try {
+            const response = await fetch(`/api/user/balance?googleId=${profile.googleId}`);
+            const data = await response.json();
+            if (data.balance !== undefined) {
+                setBalance(data.balance);
+            }
+        } catch (error) {
+            console.error('Не удалось получить баланс пользователя', error);
+        }
+    };
 
     return (
         <div className="profile">
@@ -53,11 +75,12 @@ const Profile = () => {
                         <img src={profile.picture} className="avatar" alt={profile.name}/>
                         <div className="profile-details">
                             <span className="profile-name">{firstName}</span>
+                            <span className="balance-profile">€ {balance.toFixed(2)}</span>
                         </div>
                     </div>
 
                     <div className="profile-right">
-                        <a className="my-anchor-element">
+                    <a className="my-anchor-element">
                             <button onClick={() => copyTextToClipboard(profile.googleId)} className="button1">
                                 <span className="info-button"><img src={Paper} alt="Paper"
                                                                    className="paper-icon"/>ID</span>
