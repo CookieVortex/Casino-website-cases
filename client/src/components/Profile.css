@@ -22,6 +22,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    width: 100%;
 }
 
 .form-container {
@@ -56,6 +57,10 @@
     border: none;
 }
 
+.logout-button:hover {
+    background-color: #353549;
+}
+
 .avatar {
     border-radius: 80%;
     width: 30%;
@@ -70,7 +75,7 @@
     margin-left: 10px;
 }
 
-.button2, .button3, .button4 {
+.button2, .button3, .button4, .logout-button {
     display: grid;
     justify-content: center;
     align-items: center;
@@ -146,7 +151,7 @@
     display: flex;
     justify-content: space-between;
     background-color: #282836;
-    max-width: 400px;
+    max-width: 330px;
     border-radius: 10px;
     padding: 20px;
     margin-left: 5px;
@@ -175,7 +180,7 @@
 }
 
 .open-button {
-    padding: 15px 20px;
+    padding: 15px 30px;
     border: none;
     border-radius: 5px;
     background-color: #323245;

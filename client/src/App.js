@@ -2,9 +2,9 @@ import React from 'react';
 import './App.css';
 import Header from './components/header';
 import { GoogleOAuthProvider } from '@react-oauth/google';
-import EventsSection from './components/EventsSection';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Profile from "./components/Profile";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Profile from './components/Profile';
+import Main from './components/Main';
 
 const App = () => {
     return (
@@ -12,8 +12,8 @@ const App = () => {
             <BrowserRouter>
                 <Header />
                 <Routes>
+                    <Route path="/" element={<Main />} />
                     <Route path="/profile" element={<Profile />} />
-                    <Route path="/" element={<EventsSection />} />
                 </Routes>
             </BrowserRouter>
         </GoogleOAuthProvider>

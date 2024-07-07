@@ -104,6 +104,8 @@ const Profile = () => {
                     <button onClick={handleSave} className="save-button">Сохранить</button>
                 </div>
             </div>
+
+
             <div className="section">
                 <div className="case-container">
                     <div className="case-title">Любимый Кейс</div>
@@ -112,10 +114,12 @@ const Profile = () => {
                 </div>
                 <img src={con2} alt="Case" className="case-image"/>
             </div>
+
+
             <div className="section">
                 <div className="case-container">
                     <div className="case-title">Лучший дроп</div>
-                    <div className="case-title-bonus">Facepunch TShirt</div>
+                    <div className="case-title-bonus">Face-punch TShirt</div>
                     <button className="open-button">3,98€</button>
                 </div>
                 <img src={con2} alt="Case" className="case-image"/>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import './EventsSection.css';
 import smallIcon from '../assets/images/person.png';
 
@@ -22,6 +22,7 @@ const EventsSection = () => {
                 </div>
             </div>
         </div>
+
     );
 };
 

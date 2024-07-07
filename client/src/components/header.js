@@ -205,7 +205,7 @@ const Header = () => {
                     <div className="blocks-container">
                         <div className="block first-section">
                             <div className="wifi-icon-wrapper">
-                                <img src={wifi} alt="Wifi" className="wifi-button-icon" />
+                                <img src={wifi} alt="Wifi" className="wifi-button-icon"/>
                             </div>
                             <span className="wifi-count">1</span>
                             <span className="wifi-online">online</span>
@@ -213,10 +213,10 @@ const Header = () => {
 
                         <div className="block vertical-sections">
                             <div className="second-section">
-                                <img src={crown} alt="Crown" className="crown-icon" />
+                                <img src={crown} alt="Crown" className="crown-icon"/>
                             </div>
                             <div className="third-section">
-                                <img src={cube} alt="Cube" className="cube-icon" />
+                                <img src={cube} alt="Cube" className="cube-icon"/>
                             </div>
                         </div>
 
@@ -225,10 +225,12 @@ const Header = () => {
                                 {coloredSections}
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
         </div>
+
     );
 };
 
