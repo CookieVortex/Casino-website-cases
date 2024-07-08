@@ -6,6 +6,7 @@ require('dotenv').config();
 
 const userRouter = require('./server/routes/user');
 const authRouter = require('./server/routes/auth');
+const caseRouter = require('./server/routes/case');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -30,8 +31,11 @@ app.use((req, res, next) => {
     next();
 });
 
+
 app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
+app.use('/api/case', caseRouter);
+
 
 app.get('/', (req, res) => {
     res.send('Welcome to my API!');

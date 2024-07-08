@@ -8,6 +8,7 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import Profile from './components/Profile';
 import Main from './components/Main';
 import EventsSection from './components/EventsSection';
+import CreateCase from "./components/CreateCase";
 
 const App = () => {
     return (
@@ -22,6 +23,7 @@ const App = () => {
                         </>
                     }/>
                     <Route path="/profile" element={<Profile/>}/>
+                    <Route path="/create-case" element={<CreateCase/>}/>
                 </Routes>
             </BrowserRouter>
         </GoogleOAuthProvider>

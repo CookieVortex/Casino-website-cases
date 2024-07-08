@@ -1,33 +1,44 @@
-// Main.js
-
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import './Main.css';
-import loot1 from '../assets/images/loot1.png';
-import loot2 from '../assets/images/loot2.png';
-import loot3 from '../assets/images/loot3.png';
-import loot4 from '../assets/images/loot4.png';
-import loot5 from '../assets/images/loot5.png';
-import loot6 from '../assets/images/loot6.png';
+import axios from 'axios';
 
 const Main = () => {
-    const sections = [
-        { img: loot1, label: '1.80 €' },
-        { img: loot2, label: '2.65 €' },
-        { img: loot3, label: '3.50 €' },
-        { img: loot4, label: '4.75 €' },
-        { img: loot5, label: '7.20 €' },
-        { img: loot6, label: '9.10 €' },
-    ];
+    const [cases, setCases] = useState([]);
+
+    useEffect(() => {
+        const fetchCases = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/api/case/cases');
+                setCases(response.data);
+            } catch (error) {
+                console.error('Error fetching cases:', error);
+            }
+        };
+
+        fetchCases();
+    }, []);
 
     return (
         <div className="main-section">
-            {sections.map((section, index) => (
-                <div key={index} className="sub-section">
-                    <img src={section.img} alt={`Loot ${index + 1}`} className={`loot${index + 1}`} />
+            {cases.map((caseItem, index) => (
+                <div key={caseItem._id} className="sub-section">
+                    <img src={caseItem.imageUrl} alt={caseItem.name} className={`loot${index + 1}`}/>
                     <div className="button-container">
-                        <button className="loot-button">{section.label}</button>
+                        <button className="loot-button">{`${caseItem.price} €`}</button>
                     </div>
                     <div className="new-label">NEW</div>
+                    <p className="case-name">{caseItem.name}</p>
+                    {caseItem.items && (
+                        <ul className="case-items">
+                            {caseItem.items.map((item, itemIndex) => (
+                                <li key={itemIndex} className="case-item">
+                                    <img src={item.itemImageUrl} alt={item.itemName}/>
+                                    <p>{item.itemName}</p>
+                                    <p>Drop Rate: {item.dropRate}%</p>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
                 </div>
             ))}
         </div>
