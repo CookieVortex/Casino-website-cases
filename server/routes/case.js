@@ -3,7 +3,7 @@ const router = express.Router();
 const Case = require('../models/case');
 const CaseItem = require('../models/caseItem');
 
-// Создание кейса без предметов
+// Создание кейса с предметами
 router.post('/create', async (req, res) => {
     try {
         const { name, price, imageUrl, items } = req.body;
@@ -11,27 +11,39 @@ router.post('/create', async (req, res) => {
         const newCase = new Case({
             name,
             price,
-            imageUrl
+            imageUrl,
+            items: []
         });
 
         await newCase.save();
 
+        const caseItems = items.map(item => ({
+            caseId: newCase._id,
+            itemName: item.itemName,
+            itemImageUrl: item.itemImageUrl,
+            dropRate: item.dropRate,
+            rarity: item.rarity
+        }));
+
+        const createdItems = await CaseItem.insertMany(caseItems);
+        newCase.items = createdItems.map(item => item._id);
+        await newCase.save();
+
         res.status(201).json({ message: 'Case created successfully', case: newCase });
     } catch (error) {
+        console.error('Error creating case:', error);
         res.status(500).json({ error: error.message });
     }
 });
 
-
-
-// Маршрут для получения всех кейсов
+// Получение всех кейсов
 router.get('/cases', async (req, res) => {
     try {
-        const cases = await Case.find(); // Получение всех кейсов из базы данных
-        res.json(cases); // Отправка кейсов в формате JSON клиенту
+        const cases = await Case.find().populate('items');
+        res.json(cases);
     } catch (err) {
         console.error('Error fetching cases:', err);
-        res.status(500).json({ error: 'Internal Server Error' }); // Отправка статуса 500 в случае ошибки
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 });
 

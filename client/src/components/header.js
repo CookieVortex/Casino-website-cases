@@ -102,7 +102,7 @@ const Header = () => {
 
     const menuItems = [
         { text: 'кейсы', href: '/create-case', icon: caseIcon1 },
-        { text: 'апгрейд', href: '#', icon: upgrade },
+        { text: 'апгрейд', href: '/create-item', icon: upgrade },
         { text: 'контракты', href: '#', icon: contract }
     ];
 

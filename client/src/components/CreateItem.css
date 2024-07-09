@@ -1,0 +1,148 @@
+.create-item-container {
+    display: flex;
+    max-width: 1500px;
+    margin: 80px auto 0;
+    justify-content: center;
+}
+
+.cases-list {
+    flex: 0 0 30%;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #282836;
+    margin-right: 10px;
+    color: #c5c0c3;
+    font-family: Montserrat, sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.125rem;
+    font-weight: 200;
+    margin-bottom: 50px;
+}
+
+.create-item form input[type="text"],
+.create-item form input[type="number"],
+.create-item form select,
+.create-case-form .form-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background-color: rgba(59, 96, 95, 0.5);
+    color: #fff;
+    box-sizing: border-box;
+}
+
+.create-item form input[type="text"]:focus,
+.create-item form input[type="number"]:focus,
+.create-item form select:focus,
+.create-case-form .form-input:focus {
+    border-color: #6ec60f;
+    outline: none;
+}
+
+.create-item form button,
+.create-case-form .submit-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.create-item form button:hover,
+.create-case-form .submit-button:hover {
+    background-color: #218838;
+}
+
+.create-item,
+.create-case-form {
+    flex: 1;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #282836;
+    color: #c5c0c3;
+    font-family: Montserrat, sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.125rem;
+    font-weight: 500;
+    margin-right: 10px;
+    max-width: 400px;
+    width: 100%;
+    margin-bottom: 50px;
+}
+
+.create-item h2,
+.create-case-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #c5c0c3;
+    font-family: Montserrat, sans-serif;
+    font-size: 1.575rem;
+    line-height: 1.125rem;
+    font-weight: 500;
+}
+
+.create-item form div,
+.create-case-form .form-group {
+    margin-bottom: 15px;
+}
+
+.create-item form label,
+.create-case-form .form-label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.create-item form input,
+.create-item form select,
+.create-case-form .form-input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.create-item form button,
+.create-case-form .submit-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.create-item form button:hover,
+.create-case-form .submit-button:hover {
+    background-color: #218838;
+}
+
+.case-item {
+    cursor: pointer;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: #363640;
+    transition: background-color 0.3s ease;
+}
+
+.case-item:hover {
+    background-color: #44454d;
+}
+
+.case-item h4 {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.case-id {
+    margin-left: 10px;
+    font-size: 11px;
+    color: #6ec60f;
+    font-weight: bold;
+}
+

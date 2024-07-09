@@ -28,17 +28,6 @@ const Main = () => {
                     </div>
                     <div className="new-label">NEW</div>
                     <p className="case-name">{caseItem.name}</p>
-                    {caseItem.items && (
-                        <ul className="case-items">
-                            {caseItem.items.map((item, itemIndex) => (
-                                <li key={itemIndex} className="case-item">
-                                    <img src={item.itemImageUrl} alt={item.itemName}/>
-                                    <p>{item.itemName}</p>
-                                    <p>Drop Rate: {item.dropRate}%</p>
-                                </li>
-                            ))}
-                        </ul>
-                    )}
                 </div>
             ))}
         </div>

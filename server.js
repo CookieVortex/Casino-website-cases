@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const caseItemRoutes = require('./server/routes/caseItemRoutes');
 require('dotenv').config();
 
 const userRouter = require('./server/routes/user');
@@ -31,11 +32,10 @@ app.use((req, res, next) => {
     next();
 });
 
-
 app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
 app.use('/api/case', caseRouter);
-
+app.use('/api/item', caseItemRoutes);
 
 app.get('/', (req, res) => {
     res.send('Welcome to my API!');
