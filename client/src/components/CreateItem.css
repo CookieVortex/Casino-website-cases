@@ -17,6 +17,23 @@
     line-height: 1.125rem;
     font-weight: 200;
     margin-bottom: 50px;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.item-list {
+    flex: 0 0 15%;
+    padding: 20px;
+    background-color: #282836;
+    margin-right: 10px;
+    color: #c5c0c3;
+    font-family: Montserrat, sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.125rem;
+    font-weight: 700;
+    margin-bottom: 50px;
+    max-height: 500px;
+    overflow-y: auto;
 }
 
 .create-item form input[type="text"],
@@ -145,4 +162,58 @@
     color: #6ec60f;
     font-weight: bold;
 }
+
+.caseIdStyle {
+    font-size: 10px;
+}
+
+.ItemListDeleteBtn {
+    display: flex;
+    justify-content: center;
+    border: none;
+    padding: 10px;
+    width: 180px;
+    background-color: rgb(59, 96, 95);
+    color: #c5c5d3;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.ItemListDeleteBtn:hover {
+    background-color: rgb(73, 119, 117);
+}
+
+.item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #3a3a4e;
+    padding: 20px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    color: #fff;
+}
+
+.item-content {
+    width: 100%;
+    text-align: left;
+}
+
+.item h4 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.item-image {
+    width: 60%;
+    margin: 0 auto 30px;
+    display: block;
+}
+
+.item p,
+.item button {
+    margin: 5px 0;
+    text-align: left;
+}
+
 

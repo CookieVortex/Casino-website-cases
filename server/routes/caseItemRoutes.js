@@ -34,4 +34,31 @@ router.post('/create', async (req, res) => {
     }
 });
 
+router.get('/items', async (req, res) => {
+    try {
+        const items = await CaseItem.find();
+        res.json(items);
+    } catch (error) {
+        console.error('Ошибка при загрузке предметов:', error);
+        res.status(500).json({ error: 'Ошибка сервера при загрузке предметов' });
+    }
+});
+
+// Пример маршрута для удаления предмета по ID
+router.delete('/delete/:itemId', async (req, res) => {
+    try {
+        const itemId = req.params.itemId;
+
+        const deletedItem = await CaseItem.findByIdAndDelete(itemId);
+        if (!deletedItem) {
+            return res.status(404).json({ message: 'Предмет не найден' });
+        }
+
+        res.status(200).json({ message: 'Предмет успешно удален' });
+    } catch (error) {
+        console.error('Ошибка при удалении предмета:', error);
+        res.status(500).json({ error: 'Ошибка сервера при удалении предмета' });
+    }
+});
+
 module.exports = router;

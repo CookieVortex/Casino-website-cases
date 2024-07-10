@@ -6,7 +6,7 @@ const CaseItem = require('../models/caseItem');
 // Создание кейса с предметами
 router.post('/create', async (req, res) => {
     try {
-        const { name, price, imageUrl, items } = req.body;
+        const {name, price, imageUrl, items} = req.body;
 
         const newCase = new Case({
             name,
@@ -29,10 +29,10 @@ router.post('/create', async (req, res) => {
         newCase.items = createdItems.map(item => item._id);
         await newCase.save();
 
-        res.status(201).json({ message: 'Case created successfully', case: newCase });
+        res.status(201).json({message: 'Case created successfully', case: newCase});
     } catch (error) {
         console.error('Error creating case:', error);
-        res.status(500).json({ error: error.message });
+        res.status(500).json({error: error.message});
     }
 });
 
@@ -43,7 +43,7 @@ router.get('/cases', async (req, res) => {
         res.json(cases);
     } catch (err) {
         console.error('Error fetching cases:', err);
-        res.status(500).json({ error: 'Internal Server Error' });
+        res.status(500).json({error: 'Internal Server Error'});
     }
 });
 
@@ -52,48 +52,36 @@ router.get('/:id', async (req, res) => {
     try {
         const caseData = await Case.findById(req.params.id).populate('items');
         if (!caseData) {
-            return res.status(404).json({ message: 'Case not found' });
+            return res.status(404).json({message: 'Case not found'});
         }
         res.status(200).json(caseData);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({error: error.message});
     }
 });
 
 // Получение всех предметов в кейсе
 router.get('/:id/items', async (req, res) => {
     try {
-        const items = await CaseItem.find({ caseId: req.params.id });
+        const items = await CaseItem.find({caseId: req.params.id});
         res.status(200).json(items);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({error: error.message});
     }
 });
 
 // Обновление предмета в кейсе
 router.put('/item/:id', async (req, res) => {
     try {
-        const updatedItem = await CaseItem.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        const updatedItem = await CaseItem.findByIdAndUpdate(req.params.id, req.body, {new: true});
         if (!updatedItem) {
-            return res.status(404).json({ message: 'Item not found' });
+            return res.status(404).json({message: 'Item not found'});
         }
         res.status(200).json(updatedItem);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({error: error.message});
     }
 });
 
-// Удаление предмета в кейсе
-router.delete('/item/:id', async (req, res) => {
-    try {
-        const deletedItem = await CaseItem.findByIdAndDelete(req.params.id);
-        if (!deletedItem) {
-            return res.status(404).json({ message: 'Item not found' });
-        }
-        res.status(200).json({ message: 'Item deleted successfully' });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
 
 module.exports = router;

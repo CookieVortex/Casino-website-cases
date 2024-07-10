@@ -10,21 +10,17 @@ const CreateItem = () => {
     const [itemName, setItemName] = useState('');
     const [itemImageUrl, setItemImageUrl] = useState('');
     const [dropRate, setDropRate] = useState('');
-
-    // Состояния для создания предмета
-    const [selectedCase, setSelectedCase] = useState(null);
-    const [itemNameItem, setItemNameItem] = useState('');
-    const [itemImageUrlItem, setItemImageUrlItem] = useState('');
-    const [dropRateItem, setDropRateItem] = useState('');
     const [rarity, setRarity] = useState('Common');
     const [caseId, setCaseId] = useState('');
     const [cases, setCases] = useState([]);
+    const [allItems, setAllItems] = useState([]);
+    const [selectedCase, setSelectedCase] = useState(null);
 
     useEffect(() => {
         fetchCases();
+        fetchItems();
     }, []);
 
-    // Загрузка списка всех кейсов
     const fetchCases = async () => {
         try {
             const response = await axios.get('http://localhost:5000/api/case/cases');
@@ -34,13 +30,11 @@ const CreateItem = () => {
         }
     };
 
-    // Функция для выбора кейса из списка
     const handleCaseSelect = (caseItem) => {
         setSelectedCase(caseItem);
         setCaseId(caseItem._id);
     };
 
-    // Отправка данных для создания кейса
     const handleSubmitCase = async (e) => {
         e.preventDefault();
         const caseData = {
@@ -57,44 +51,92 @@ const CreateItem = () => {
             setPrice('');
             setImageUrl('');
             setItems([]);
+            fetchCases();
         } catch (error) {
             console.error('Ошибка при создании кейса:', error);
         }
     };
 
-    // Отправка данных для создания предмета
     const handleSubmitItem = async (e) => {
         e.preventDefault();
+        if (!caseId) {
+            alert('Выберите кейс для добавления предмета.');
+            return;
+        }
+
         const itemData = {
-            itemName: itemNameItem,
-            itemImageUrl: itemImageUrlItem,
-            dropRate: dropRateItem,
-            rarity: rarity,
-            caseId: caseId,
+            itemName,
+            itemImageUrl,
+            dropRate,
+            rarity,
+            caseId,
         };
 
         try {
             const response = await axios.post('http://localhost:5000/api/item/create', itemData);
             console.log(response.data);
-            setItemNameItem('');
-            setItemImageUrlItem('');
-            setDropRateItem('');
+            setItemName('');
+            setItemImageUrl('');
+            setDropRate('');
             setRarity('Common');
-            setSelectedCase(null);
-            fetchCases();
+            fetchItems(); // Обновляем список предметов после создания нового предмета
         } catch (error) {
             console.error('Ошибка при создании предмета:', error);
         }
     };
 
+    const fetchItems = async () => {
+        try {
+            const response = await axios.get('http://localhost:5000/api/item/items');
+            setItems(response.data);
+        } catch (error) {
+            console.error('Ошибка при загрузке предметов:', error);
+        }
+    };
+
+    const handleDeleteItem = async (itemId) => {
+        try {
+            await axios.delete(`http://localhost:5000/api/item/delete/${itemId}`);
+            fetchItems(); // Обновляем список предметов после удаления
+        } catch (error) {
+            console.error(`Ошибка при удалении предмета с ID ${itemId}:`, error);
+        }
+    };
+
     return (
+
         <div className="create-item-container">
+            <div className="item-list">
+                <h3>Список предметов</h3>
+                {items.length === 0 ? (
+                    <p>Нет доступных предметов</p>
+                ) : (
+                    items.map(item => (
+                        <div key={item._id} className="item">
+                            <div className="item-content">
+                                <h4>{item.itemName}</h4>
+                                <img src={item.itemImageUrl} alt={item.itemName} className="item-image"/>
+                                <p>Шанс выпадения: {item.dropRate} %</p>
+                                <p>Редкость: {item.rarity}</p>
+                                <p>Имя
+                                    кейса: {cases.find(caseItem => caseItem._id === item.caseId)?.name || 'Неизвестно'}</p>
+                                <p className="caseIdStyle">ИД: {item.caseId}</p>
+                                <button className="ItemListDeleteBtn"
+                                        onClick={() => handleDeleteItem(item._id)}>Удалить
+                                </button>
+                            </div>
+                        </div>
+
+                    ))
+                )}
+            </div>
+
             <div className="cases-list">
                 <h3>Все кейсы</h3>
                 {cases.map(caseItem => (
                     <div key={caseItem._id} onClick={() => handleCaseSelect(caseItem)}
                          className={`case-item ${selectedCase === caseItem ? 'selected' : ''}`}>
-                        <h4>{caseItem.name} - Цена: ${caseItem.price} <span
+                        <h4>{caseItem.name} - Цена: € {caseItem.price} <span
                             className="case-id">ID: {caseItem._id}</span></h4>
                         <ul>
                             {caseItem.items && caseItem.items.map(item => (
@@ -105,27 +147,25 @@ const CreateItem = () => {
                         </ul>
                     </div>
                 ))}
-
             </div>
 
-            {/* Форма для создания предмета */}
             <div className="create-item">
                 <h2>Создать предмет</h2>
                 <form onSubmit={handleSubmitItem}>
                     <div className="form-group">
                         <label className="form-label">Название предмета:</label>
-                        <input type="text" className="form-input" value={itemNameItem}
-                               onChange={(e) => setItemNameItem(e.target.value)} required/>
+                        <input type="text" className="form-input" value={itemName}
+                               onChange={(e) => setItemName(e.target.value)} required/>
                     </div>
                     <div className="form-group">
                         <label className="form-label">URL изображения предмета:</label>
-                        <input type="text" className="form-input" value={itemImageUrlItem}
-                               onChange={(e) => setItemImageUrlItem(e.target.value)} required/>
+                        <input type="text" className="form-input" value={itemImageUrl}
+                               onChange={(e) => setItemImageUrl(e.target.value)} required/>
                     </div>
                     <div className="form-group">
                         <label className="form-label">Шанс выпадения:</label>
-                        <input type="number" className="form-input" value={dropRateItem}
-                               onChange={(e) => setDropRateItem(e.target.value)} required/>
+                        <input type="number" className="form-input" value={dropRate}
+                               onChange={(e) => setDropRate(e.target.value)} required/>
                     </div>
                     <div className="form-group">
                         <label className="form-label">Редкость:</label>
@@ -138,13 +178,12 @@ const CreateItem = () => {
                     <div className="form-group">
                         <label className="form-label">ID кейса:</label>
                         <input type="text" className="form-input" value={caseId}
-                               onChange={(e) => setCaseId(e.target.value)} required/>
+                               onChange={(e) => setCaseId(e.target.value)} readOnly/>
                     </div>
                     <button type="submit" className="submit-button">Создать предмет</button>
                 </form>
             </div>
 
-            {/* Форма для создания кейса */}
             <form className="create-case-form" onSubmit={handleSubmitCase}>
                 <h2>Создать кейс</h2>
                 <div className="form-group">
