@@ -216,4 +216,15 @@
     text-align: left;
 }
 
+.case-selection {
+    margin-top: 10px;
+}
+
+.case-selection label {
+    display: inline-flex;
+    margin: 1px 0;
+}
+
+
+
 

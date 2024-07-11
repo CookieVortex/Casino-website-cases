@@ -11,7 +11,7 @@ const CreateItem = () => {
     const [itemImageUrl, setItemImageUrl] = useState('');
     const [dropRate, setDropRate] = useState('');
     const [rarity, setRarity] = useState('Common');
-    const [caseId, setCaseId] = useState('');
+    const [selectedCases, setSelectedCases] = useState([]);
     const [cases, setCases] = useState([]);
     const [allItems, setAllItems] = useState([]);
     const [selectedCase, setSelectedCase] = useState(null);
@@ -31,8 +31,11 @@ const CreateItem = () => {
     };
 
     const handleCaseSelect = (caseItem) => {
-        setSelectedCase(caseItem);
-        setCaseId(caseItem._id);
+        if (selectedCases.some(c => c._id === caseItem._id)) {
+            setSelectedCases(selectedCases.filter(c => c._id !== caseItem._id));
+        } else {
+            setSelectedCases([...selectedCases, caseItem]);
+        }
     };
 
     const handleSubmitCase = async (e) => {
@@ -59,22 +62,26 @@ const CreateItem = () => {
 
     const handleSubmitItem = async (e) => {
         e.preventDefault();
-        if (!caseId) {
-            alert('Выберите кейс для добавления предмета.');
+        if (selectedCases.length === 0) {
+            alert('Выберите кейсы для добавления предмета.');
             return;
         }
 
-        const itemData = {
-            itemName,
-            itemImageUrl,
-            dropRate,
-            rarity,
-            caseId,
-        };
-
         try {
-            const response = await axios.post('http://localhost:5000/api/item/create', itemData);
-            console.log(response.data);
+            const itemData = {
+                itemName,
+                itemImageUrl,
+                dropRate,
+                rarity,
+            };
+
+            // Создаем предмет для каждого выбранного кейса
+            for (let i = 0; i < selectedCases.length; i++) {
+                itemData.caseId = selectedCases[i]._id;
+                const response = await axios.post('http://localhost:5000/api/item/create', itemData);
+                console.log(response.data);
+            }
+
             setItemName('');
             setItemImageUrl('');
             setDropRate('');
@@ -104,7 +111,6 @@ const CreateItem = () => {
     };
 
     return (
-
         <div className="create-item-container">
             <div className="item-list">
                 <h3>Список предметов</h3>
@@ -126,7 +132,6 @@ const CreateItem = () => {
                                 </button>
                             </div>
                         </div>
-
                     ))
                 )}
             </div>
@@ -135,7 +140,7 @@ const CreateItem = () => {
                 <h3>Все кейсы</h3>
                 {cases.map(caseItem => (
                     <div key={caseItem._id} onClick={() => handleCaseSelect(caseItem)}
-                         className={`case-item ${selectedCase === caseItem ? 'selected' : ''}`}>
+                         className={`case-item ${selectedCases.some(c => c._id === caseItem._id) ? 'selected' : ''}`}>
                         <h4>{caseItem.name} - Цена: € {caseItem.price} <span
                             className="case-id">ID: {caseItem._id}</span></h4>
                         <ul>
@@ -176,9 +181,12 @@ const CreateItem = () => {
                         </select>
                     </div>
                     <div className="form-group">
-                        <label className="form-label">ID кейса:</label>
-                        <input type="text" className="form-input" value={caseId}
-                               onChange={(e) => setCaseId(e.target.value)} readOnly/>
+                        <label className="form-label">Выбранные кейсы:</label>
+                        <ul>
+                            {selectedCases.map(caseItem => (
+                                <li key={caseItem._id}>{caseItem.name}</li>
+                            ))}
+                        </ul>
                     </div>
                     <button type="submit" className="submit-button">Создать предмет</button>
                 </form>
