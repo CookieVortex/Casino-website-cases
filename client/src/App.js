@@ -6,7 +6,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Profile from './components/Profile';
 import Main from './components/Main';
 import EventsSection from './components/EventsSection';
-import CreateItem from "./components/CreateItem";
+import Admin from "./components/admin";
 
 const App = () => {
     return (
@@ -21,7 +21,7 @@ const App = () => {
                         </>
                     } />
                     <Route path="/profile" element={<Profile />} />
-                    <Route path="/create-case" element={<CreateItem />} />
+                    <Route path="/admin-panel" element={<Admin />} />
                 </Routes>
             </BrowserRouter>
         </GoogleOAuthProvider>

@@ -14,7 +14,11 @@ import smallLogo from '../assets/icons/iconBg.svg';
 import sign from '../assets/icons/sign.svg';
 import logout from '../assets/icons/logout.svg';
 import logo from '../assets/icons/logo.svg';
+import admin from '../assets/icons/admin.svg';
+import axios from 'axios';
 import Cookies from 'js-cookie';
+
+const API_BASE_URL = 'http://localhost:5000';
 
 const Header = () => {
     const navigate = useNavigate();
@@ -23,6 +27,8 @@ const Header = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [profile, setProfile] = useState({});
     const [balance, setBalance] = useState(0);
+    const [randomItems, setRandomItems] = useState([]);
+    const isAdmin = profile.googleId === '110140695950508222428';
 
     useEffect(() => {
         const storedProfile = Cookies.get('userProfile');
@@ -31,6 +37,38 @@ const Header = () => {
             setIsAuthenticated(true);
         }
     }, []);
+
+    useEffect(() => {
+        fetchRandomItems();
+        const interval = setInterval(fetchRandomItems, 4000);
+
+        return () => {
+            clearInterval(interval);
+        };
+    }, []);
+
+    const fetchRandomItems = async () => {
+        try {
+            const response = await axios.get(`${API_BASE_URL}/api/item/items`);
+            const shuffledItems = shuffleArray(response.data);
+            const slicedItems = shuffledItems.slice(0, 10); // Изменено на 10 элементов
+            setRandomItems(slicedItems);
+        } catch (error) {
+            console.error('Ошибка при загрузке случайных предметов:', error);
+        }
+    };
+
+    const shuffleArray = (array) => {
+        let currentIndex = array.length, temporaryValue, randomIndex;
+        while (0 !== currentIndex) {
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+            temporaryValue = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = temporaryValue;
+        }
+        return array;
+    };
 
     const fetchUserProfile = async (response) => {
         try {
@@ -51,7 +89,6 @@ const Header = () => {
                 })
             });
 
-            const userResult = await userResponse.json();
             setProfile({
                 googleId: data.sub,
                 email: data.email,
@@ -106,28 +143,13 @@ const Header = () => {
         { text: 'контракты', href: '#', icon: contract }
     ];
 
+    if (isAdmin) {
+        menuItems.push({ text: 'Админ-панель', href: '/admin-panel', icon: admin });
+    }
+
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
     const toggleMenu = () => setMenuOpen(!menuOpen);
-
-    const imagePaths = [
-        'https://i.ibb.co/yNRn4sK/image1.jpg',
-        'https://i.ibb.co/Wt2TLjV/image2.jpg',
-        'https://i.ibb.co/y0YNT9R/image3.jpg',
-        'https://i.ibb.co/cg1GZfq/image4.jpg',
-        'https://i.ibb.co/BN6f4zY/image5.jpg',
-        'https://i.ibb.co/xJXPdm7/image6.jpg',
-        'https://i.ibb.co/B4H0K6Y/image7.jpg',
-        'https://i.ibb.co/xgccfJv/image8.jpg',
-        'https://i.ibb.co/YZB9mbG/image9.jpg',
-        'https://i.ibb.co/9rLDhz3/image10.jpg'
-    ];
-
-    const coloredSections = imagePaths.map((imageSrc, i) => (
-        <div className="colored-section" key={i}>
-            <img src={imageSrc} alt={`Section ${i + 1}`} className="overlay-image" />
-        </div>
-    ));
 
     return (
         <div>
@@ -164,7 +186,6 @@ const Header = () => {
                         <div className="login-button-wrapper">
                             {isAuthenticated ? (
                                 <div className="profile-greeting">
-
                                     <span className="balance-container">
                                         <span className="balance-text">€ {balance.toFixed(2)}</span>
                                     </span>
@@ -222,7 +243,11 @@ const Header = () => {
 
                         <div className="block right-block">
                             <div className="colored-sections">
-                                {coloredSections}
+                                {randomItems.map((item, index) => (
+                                    <div className={`colored-section ${getRarityClass(item.rarity)}`} key={index}>
+                                        <img src={item.itemImageUrl} alt={`Random Item ${index + 1}`} className="overlay-image" />
+                                    </div>
+                                ))}
                             </div>
                         </div>
 
@@ -230,8 +255,20 @@ const Header = () => {
                 </div>
             </div>
         </div>
-
     );
+};
+
+const getRarityClass = (rarity) => {
+    switch (rarity) {
+        case 'Common':
+            return 'common';
+        case 'Rare':
+            return 'rare red';
+        case 'Epic':
+            return 'epic';
+        default:
+            return '';
+    }
 };
 
 export default Header;

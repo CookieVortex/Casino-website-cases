@@ -34,6 +34,7 @@
     margin-bottom: 50px;
     max-height: 500px;
     overflow-y: auto;
+    border-radius: 5px;
 }
 
 .create-item form input[type="text"],
@@ -163,10 +164,6 @@
     font-weight: bold;
 }
 
-.caseIdStyle {
-    font-size: 10px;
-}
-
 .ItemListDeleteBtn {
     display: flex;
     justify-content: center;
@@ -184,12 +181,9 @@
 }
 
 .item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     background-color: #3a3a4e;
-    padding: 20px;
-    margin-bottom: 10px;
+    padding: 15px;
+    margin-bottom: 5px;
     border-radius: 10px;
     color: #fff;
 }
@@ -225,6 +219,22 @@
     margin: 1px 0;
 }
 
+.large-text {
+    font-size: 0.9em;
+}
 
+.small-text {
+    font-size: 0.8em;
+}
 
-
+.case-list {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    color: #c5c0c3;
+    font-family: Montserrat, sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.125rem;
+    font-weight: 700;
+}

@@ -61,4 +61,15 @@ router.delete('/delete/:itemId', async (req, res) => {
     }
 });
 
+// Получение случайных предметов
+router.get('/api/item/items', async (req, res) => {
+    try {
+        const items = await CaseItem.find();
+        res.json(items);
+    } catch (error) {
+        console.error('Ошибка при загрузке предметов:', error);
+        res.status(500).json({ error: 'Ошибка сервера при загрузке предметов' });
+    }
+});
+
 module.exports = router;
