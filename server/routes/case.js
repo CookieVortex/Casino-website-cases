@@ -22,7 +22,8 @@ router.post('/create', async (req, res) => {
             itemName: item.itemName,
             itemImageUrl: item.itemImageUrl,
             dropRate: item.dropRate,
-            rarity: item.rarity
+            rarity: item.rarity,
+            price: item.price
         }));
 
         const createdItems = await CaseItem.insertMany(caseItems);

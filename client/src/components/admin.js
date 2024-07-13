@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
+import {ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './admin.css';
 
 const API_BASE_URL = 'http://localhost:5000/api';
 
 const Admin = () => {
     const [name, setName] = useState('');
+    const [itemPrice, setItemPrice] = useState('');
     const [price, setPrice] = useState('');
     const [imageUrl, setImageUrl] = useState('');
     const [items, setItems] = useState([]);
@@ -40,7 +43,7 @@ const Admin = () => {
 
     const handleSubmitCase = async (e) => {
         e.preventDefault();
-        const caseData = { name, price, imageUrl, items };
+        const caseData = {name, price, imageUrl, items};
 
         try {
             await axios.post(`${API_BASE_URL}/case/create`, caseData);
@@ -49,8 +52,10 @@ const Admin = () => {
             setImageUrl('');
             setItems([]);
             fetchCases();
+            toast.success('Кейс успешно создан!', {autoClose: 3000});
         } catch (error) {
             console.error('Ошибка при создании кейса:', error);
+            toast.error('Ошибка при создании кейса', {autoClose: 3000});
         }
     };
 
@@ -61,7 +66,7 @@ const Admin = () => {
             return;
         }
 
-        const itemData = { itemName, itemImageUrl, dropRate, rarity };
+        const itemData = {itemName, itemImageUrl, dropRate, rarity, price: itemPrice};
 
         try {
             for (let i = 0; i < selectedCases.length; i++) {
@@ -73,9 +78,12 @@ const Admin = () => {
             setItemImageUrl('');
             setDropRate('');
             setRarity('Common');
+            setItemPrice('');
             fetchItems();
+            toast.success('Предмет успешно создан!', {autoClose: 3000});
         } catch (error) {
             console.error('Ошибка при создании предмета:', error);
+            toast.error('Ошибка при создании предмета', {autoClose: 3000});
         }
     };
 
@@ -92,13 +100,16 @@ const Admin = () => {
         try {
             await axios.delete(`${API_BASE_URL}/item/delete/${itemId}`);
             fetchItems();
+            toast.success('Предмет успешно удален!', {autoClose: 3000});
         } catch (error) {
             console.error(`Ошибка при удалении предмета с ID ${itemId}:`, error);
+            toast.error('Ошибка при удалении предмета', {autoClose: 3000});
         }
     };
 
     return (
         <div className="create-item-container">
+            <ToastContainer position="top-right" autoClose={5000} theme="dark"/>
             <div className="item-list">
                 <p className="case-list">Список предметов</p>
                 {items.length === 0 ? (
@@ -108,7 +119,7 @@ const Admin = () => {
                         <div key={item._id} className="item">
                             <div className="item-content">
                                 <h4>{item.itemName}</h4>
-                                <img src={item.itemImageUrl} alt={item.itemName} className="item-image" />
+                                <img src={item.itemImageUrl} alt={item.itemName} className="item-image"/>
                                 <p>
                                     <span className="large-text">Шанс выпадения:</span>
                                     <span className="small-text"> {item.dropRate} %</span>
@@ -118,11 +129,17 @@ const Admin = () => {
                                     <span className="small-text"> {item.rarity}</span>
                                 </p>
                                 <p>
-                                    <span className="large-text">Имя кейса:</span>
-                                    <span className="small-text">
-                                        {cases.find((caseItem) => caseItem._id === item.caseId)?.name || 'Неизвестно'}
-                                    </span>
+                                    <span className="large-text">Цена:</span>
+                                    <span className="small-text"> {item.price} €</span>
                                 </p>
+
+                                <p>
+                                    <span className="large-text">Имя кейса: </span>
+                                    <span className="small-text">
+                                    {cases.find((caseItem) => caseItem._id === item.caseId)?.name || 'Неизвестно'}
+                                </span>
+                                </p>
+
                                 <button className="ItemListDeleteBtn" onClick={() => handleDeleteItem(item._id)}>
                                     Удалить
                                 </button>
@@ -193,6 +210,17 @@ const Admin = () => {
                             <option value="Rare">Редкий</option>
                             <option value="Epic">Эпический</option>
                         </select>
+                    </div>
+                    <div className="form-group">
+                        <label className="form-label">Цена:</label>
+                        <input
+                            type="number"
+                            className="form-input"
+                            value={itemPrice}
+                            onChange={(e) => setItemPrice(e.target.value)}
+                            required
+                        />
+
                     </div>
                     <div className="form-group">
                         <label className="form-label">Выбранные кейсы:</label>

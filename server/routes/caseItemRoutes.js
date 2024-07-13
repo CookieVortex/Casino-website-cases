@@ -6,7 +6,7 @@ const Case = require('../models/case');
 // Создание нового предмета
 router.post('/create', async (req, res) => {
     try {
-        const { itemName, itemImageUrl, dropRate, rarity, caseId } = req.body;
+        const { itemName, itemImageUrl, dropRate, rarity, caseId, price } = req.body;
 
         const existingCase = await Case.findById(caseId);
         if (!existingCase) {
@@ -18,7 +18,8 @@ router.post('/create', async (req, res) => {
             itemName,
             itemImageUrl,
             dropRate,
-            rarity
+            rarity,
+            price: price || 0
         });
 
         await newItem.save();
