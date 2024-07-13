@@ -1,6 +1,7 @@
-![Снимок экрана 2024-07-12 174753](https://github.com/user-attachments/assets/6ce62f0a-3b3a-4be7-ba67-e55af7dea117)
-![Снимок экрана 2024-07-08 235132](https://github.com/CookieVortex/Casino-website-cases/assets/24642100/16a8461d-100e-47ea-b5e5-bf72608f1faf)
+![Снимок экрана 2024-07-13 145543](https://github.com/user-attachments/assets/ae19f39e-3afa-4965-b8ed-2c043f7ab381)
+![Снимок экрана 2024-07-13 145623](https://github.com/user-attachments/assets/2b6fa9fb-b6d2-451f-867e-37fd5c2d160a)
 ![Снимок экрана 2024-07-11 224206](https://github.com/CookieVortex/Casino-website-cases/assets/24642100/b91fa1a5-1f8c-4194-879a-3c24dd71af5a)
+
 
 # Case Opening App
 
